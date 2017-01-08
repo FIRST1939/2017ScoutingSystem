@@ -1,23 +1,23 @@
 package elements;
 
-import javax.swing.JTextField;
-
 import buildingBlocks.RobotNumber;
-import buildingBlocks.RobotPanel;
 import buildingBlocks.RobotTabbedPanel;
+import buildingBlocks.ScoreField;
+import ui.AutonomousRobotPanel;
+import ui.TeleoperatedRobotPanel;
 
 /**
  * This class manages a panel that governs the Autonomous and Teleoperated panels.
  * @author Grayson Spidle
  *
  */
-public class Robot extends RobotTabbedPanel {
+public class Robot extends RobotTabbedPanel<AutonomousRobotPanel,TeleoperatedRobotPanel> {
 	
 	private static final long serialVersionUID = 4952300412598887831L;
 	
 	private RobotNumber number = new RobotNumber("" + null);
 	
-	public Robot(RobotPanel autonomous, RobotPanel teleoperated) {
+	public Robot(AutonomousRobotPanel autonomous, TeleoperatedRobotPanel teleoperated) {
 		super(autonomous, teleoperated);
 		number.setText(autonomous.number.getText());
 	}
@@ -28,10 +28,10 @@ public class Robot extends RobotTabbedPanel {
 	}
 	
 	public void setEditable(boolean arg0) {
-		for (JTextField field : autonomous.fields) {
+		for (ScoreField field : autonomous.fields) {
 			field.setEditable(arg0);
 		}
-		for (JTextField field : teleoperated.fields) {
+		for (ScoreField field : teleoperated.fields) {
 			field.setEditable(arg0);
 		}
 	}

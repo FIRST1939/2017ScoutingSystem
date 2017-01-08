@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="2016ScoutingSystemTest/lib/natives"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="2017ScoutingSystem/lib/natives"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
@@ -13,10 +13,6 @@
 	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/jinput-2.0.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/jinput-2.0.5-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/jinput-test.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/ScoutingSystemLibrary.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="2017ScoutingSystem/lib/natives"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/ScoutingSystemLibrary.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
