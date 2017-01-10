@@ -14,8 +14,7 @@
 	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/jinput-2.0.5-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/jinput-test.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/ScoutingSystemLibrary.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/converter-gson-2.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/tba4j.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/gson-2.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Grayson Spidle/Eclipse Workspaces/2017ScoutingSystem/lib/retrofit-2.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
