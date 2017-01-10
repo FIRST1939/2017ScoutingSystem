@@ -28,10 +28,6 @@ import buildingBlocks.ValueChangeListener;
  *
  */
 public class AutonomousRobotPanel extends RobotPanel {
-	// TODO Possible problems in the future:
-	/*
-	 * The order of when things are added affects the .csv file
-	 */
 	private static final long serialVersionUID = -8832379680749996395L;
 
 	public Font nameFont = new Font("Tahoma", Font.BOLD, 15);
@@ -44,8 +40,6 @@ public class AutonomousRobotPanel extends RobotPanel {
 	public ScoreField baselineField;
 	public ScoreField totalPointsField;
 	
-	public ScoreField blocksField;
-	
 	public RobotNumber name;
 	
 	public ScoreLabel lowGoalLabel;
@@ -54,7 +48,6 @@ public class AutonomousRobotPanel extends RobotPanel {
 	public ScoreLabel baselineLabel;
 	public ScoreLabel totalPointsLabel;
 	
-	public ScoreLabel blocksLabel;
 	
 	/**
 	 * The constructor.
@@ -112,11 +105,6 @@ public class AutonomousRobotPanel extends RobotPanel {
 		lowGoalLabel.setFont(scoreLabelFont);
 		this.add(lowGoalLabel, "2, 6, fill, center");
 		
-		blocksLabel = new ScoreLabel("Blocks");
-		blocksLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		blocksLabel.setFont(scoreLabelFont);
-		this.add(blocksLabel, "8, 6, fill, center");
-		
 		highGoalLabel = new ScoreLabel("High Goal");
 		highGoalLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		highGoalLabel.setFont(scoreLabelFont);
@@ -136,23 +124,13 @@ public class AutonomousRobotPanel extends RobotPanel {
 		lowGoalField.setHorizontalAlignment(SwingConstants.TRAILING);
 		lowGoalField.setFont(scoreFieldFont);
 		lowGoalField.setText("0");
-		lowGoalField.setName("lowGoalField");
 		lowGoalField.setEditable(false);
 		this.add(lowGoalField, "4, 6, fill, fill");
 		lowGoalField.setColumns(10);
 		
-		blocksField = new ScoreField();
-		blocksField.setEditable(false);
-		blocksField.setText("0");
-		blocksField.setHorizontalAlignment(SwingConstants.RIGHT);
-		blocksField.setFont(scoreFieldFont);
-		this.add(blocksField, "10, 6, fill, fill");
-		blocksField.setColumns(10);
-		
 		highGoalField = new ScoreField();
 		highGoalField.setFont(scoreFieldFont);
 		highGoalField.setText("0");
-		highGoalField.setName("highGoalField");
 		highGoalField.setHorizontalAlignment(SwingConstants.RIGHT);
 		highGoalField.setEditable(false);
 		this.add(highGoalField, "4, 8, fill, fill");
@@ -162,7 +140,6 @@ public class AutonomousRobotPanel extends RobotPanel {
 		gearField.setEditable(false);
 		gearField.setHorizontalAlignment(SwingConstants.RIGHT);
 		gearField.setFont(scoreFieldFont);
-		gearField.setName("gearField");
 		gearField.setText("0");
 		this.add(gearField, "4, 10, fill, fill");
 		gearField.setColumns(10);
@@ -184,7 +161,6 @@ public class AutonomousRobotPanel extends RobotPanel {
 		totalPointsField = new ScoreField();
 		totalPointsField.setEditable(false);
 		totalPointsField.setText("0");
-		totalPointsField.setName("totalPointsField");
 		totalPointsField.setHorizontalAlignment(SwingConstants.CENTER);
 		totalPointsField.setFont(scoreFieldFont);
 		this.add(totalPointsField, "6, 22, fill, fill");

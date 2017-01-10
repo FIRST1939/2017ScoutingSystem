@@ -38,11 +38,15 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 	public ScoreField gearField;
 	public ScoreField totalPointsField;
 	
+	public ScoreField blocksField;
+	
 	public RobotNumber name = new RobotNumber();
 	public ScoreLabel lowGoalLabel;
 	public ScoreLabel highGoalLabel;
 	public ScoreLabel gearLabel;
 	public ScoreLabel totalPointsLabel;
+	
+	public ScoreLabel blocksLabel;
 	
 	/**
 	 * The constructor.
@@ -57,7 +61,7 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("84px"),
+				ColumnSpec.decode("84px:grow"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
@@ -77,8 +81,17 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("20px"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
-		
 		name = new RobotNumber(robotNumber);
 		name.setSize(this.getWidth(), 14);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
@@ -100,9 +113,10 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		gearLabel.setFont(scoreLabelFont);
 		this.add(gearLabel, "2, 10, fill, center");
 		
-		totalPointsLabel = new ScoreLabel("Total Points");
-		totalPointsLabel.setFont(scoreLabelFont);
-		this.add(totalPointsLabel, "2, 12, fill, center");
+		blocksLabel = new ScoreLabel("Blocks");
+		blocksLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		blocksLabel.setFont(scoreLabelFont);
+		this.add(blocksLabel, "8, 6, fill, center");
 		
 		lowGoalField = new ScoreField();
 		lowGoalField.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -131,14 +145,26 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		this.add(gearField, "4, 10, fill, fill");
 		gearField.setColumns(10);
 		
+		totalPointsLabel = new ScoreLabel("Total Points");
+		totalPointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		totalPointsLabel.setFont(scoreLabelFont);
+		this.add(totalPointsLabel, "6, 20, fill, center");
+		
 		totalPointsField = new ScoreField();
 		totalPointsField.setEditable(false);
 		totalPointsField.setText("0");
-		totalPointsField.setName("totalPointsField");
-		totalPointsField.setHorizontalAlignment(SwingConstants.RIGHT);
+		totalPointsField.setHorizontalAlignment(SwingConstants.CENTER);
 		totalPointsField.setFont(scoreFieldFont);
-		this.add(totalPointsField, "4, 12, fill, fill");
+		this.add(totalPointsField, "6, 22, fill, fill");
 		totalPointsField.setColumns(10);
+		
+		blocksField = new ScoreField();
+		blocksField.setEditable(false);
+		blocksField.setText("0");
+		blocksField.setHorizontalAlignment(SwingConstants.RIGHT);
+		blocksField.setFont(scoreFieldFont);
+		this.add(blocksField, "10, 6, fill, fill");
+		blocksField.setColumns(10);
 		
 	}
 }
