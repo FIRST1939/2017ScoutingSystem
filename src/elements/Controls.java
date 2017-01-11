@@ -10,7 +10,6 @@ import ui.UI;
 /**
  * This class governs modifies the UI according to controller inputs. It is flexible with the difference in controller types.
  * @author Grayson Spidle
- *
  */
 public class Controls extends ControlScheme {
 	
@@ -40,7 +39,7 @@ public class Controls extends ControlScheme {
 					panel.autonomous.lowGoalField.setText("" + value);
 				}
 				if (controller.isAPressed()){
-					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					int value = Integer.parseInt(panel.autonomous.gearField.getText());
 					value++;
 					panel.autonomous.gearField.setText("" + value);
 				}
