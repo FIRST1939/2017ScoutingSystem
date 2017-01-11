@@ -22,16 +22,33 @@ public class Controls extends ControlScheme {
 	 */
 	public Controls(UI arg0) {
 		super(arg0);
+	
 		setAutonomousActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JController controller = (JController) e.getSource();
 				Robot panel = (Robot) ui.getRobotTabbedPanel(controller.robotPanelNumber);
-				if (controller.isAPressed()) { // This is just for testing
-					int value = Integer.parseInt(panel.autonomous.fields.get(0).getText());
+				if (controller.isLTPressed()){
+					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
 					value++;
 					panel.autonomous.highGoalField.setText("" + value);
+				}
+				if (controller.isRTPressed()){
+					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					value++;
+					panel.autonomous.lowGoalField.setText("" + value);
+				}
+				if (controller.isAPressed()){
+					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					value++;
+					panel.autonomous.gearField.setText("" + value);
+				}
+				if (controller.isLBPressed()){
+					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					value++;
+					panel.autonomous.baselineField.setText("" + value);
+					
 				}
 				
 				// Switches between autonomous and teleoperated and their respective control schemes
@@ -58,11 +75,28 @@ public class Controls extends ControlScheme {
 				JController controller = (JController) e.getSource();
 				Robot panel = (Robot) ui.getRobotTabbedPanel(controller.robotPanelNumber);
 
-				if (controller.isAPressed()) { // This is just for testing
+				
+				if (controller.isLTPressed()){
 					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
 					value++;
 					panel.teleoperated.highGoalField.setText("" + value);
 				}
+				if (controller.isRTPressed()){
+					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					value++;
+					panel.teleoperated.lowGoalField.setText("" + value);
+				}
+				if (controller.isAPressed()){
+					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					value++;
+					panel.teleoperated.gearField.setText("" + value);
+				}
+				if (controller.isLBPressed()){
+					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					value++;
+					panel.teleoperated.blocksField.setText("" +value);;
+				}
+				
 				
 				// Switches between autonomous and teleoperated and their respective control schemes
 				if (controller.isStartPressed()) { 
