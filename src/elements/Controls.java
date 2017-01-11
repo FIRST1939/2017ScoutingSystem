@@ -29,12 +29,12 @@ public class Controls extends ControlScheme {
 				JController controller = (JController) e.getSource();
 				Robot panel = (Robot) ui.getRobotTabbedPanel(controller.robotPanelNumber);
 				if (controller.isLTPressed()){
-					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					int value = Integer.parseInt(panel.autonomous.fields.get(0).getText());
 					value++;
 					panel.autonomous.highGoalField.setText("" + value);
 				}
 				if (controller.isRTPressed()){
-					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					int value = Integer.parseInt(panel.autonomous.fields.get(0).getText());
 					value++;
 					panel.autonomous.lowGoalField.setText("" + value);
 				}
@@ -44,7 +44,7 @@ public class Controls extends ControlScheme {
 					panel.autonomous.gearField.setText("" + value);
 				}
 				if (controller.isLBPressed()){
-					int value = Integer.parseInt(panel.teleoperated.fields.get(0).getText());
+					int value = Integer.parseInt(panel.autonomous.baselineField.getText());
 					value++;
 					panel.autonomous.baselineField.setText("" + value);
 					
