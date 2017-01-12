@@ -161,19 +161,6 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		this.add(gearField, "4, 10, fill, fill");
 		gearField.setColumns(10);
 		
-		totalPointsLabel = new ScoreLabel("Total Points");
-		totalPointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		totalPointsLabel.setFont(scoreLabelFont);
-		this.add(totalPointsLabel, "6, 20, fill, center");
-		
-		totalPointsField = new ScoreField();
-		totalPointsField.setEditable(false);
-		totalPointsField.setText("0");
-		totalPointsField.setHorizontalAlignment(SwingConstants.CENTER);
-		totalPointsField.setFont(scoreFieldFont);
-		this.add(totalPointsField, "6, 22, fill, fill");
-		totalPointsField.setColumns(10);
-		
 		blocksField = new ScoreField();
 		blocksField.setEditable(false);
 		blocksField.setText("0");
