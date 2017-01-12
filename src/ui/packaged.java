@@ -25,7 +25,7 @@ import buildingBlocks.ScoreLabel;
  * @author Grayson Spidle
  *
  */
-public class TeleoperatedRobotPanel extends RobotPanel {
+public class packaged extends RobotPanel {
 	
 	private static final long serialVersionUID = -8832379680749996395L;
 
@@ -47,15 +47,15 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 	public ScoreLabel totalPointsLabel;
 	
 	public ScoreLabel blocksLabel;
-	public ScoreField climbingField;
-	public ScoreLabel climbLabel;
+	private ScoreField climbingField;
+	private ScoreLabel climbLabel;
 	
 	/**
 	 * The constructor.
 	 * @param robotNumber The team number.
 	 * @param teamColor The team color.
 	 */
-	public TeleoperatedRobotPanel(String robotNumber, Color teamColor) {
+	public packaged(String robotNumber, Color teamColor) {
 		super();
 		this.setBorder(new LineBorder(new Color(0, 0, 0)));
 		this.setBackground(teamColor);
