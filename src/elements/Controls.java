@@ -97,36 +97,14 @@ public class Controls extends ControlScheme {
 				JController controller = (JController) e.getSource();
 				Robot panel = (Robot) ui.getRobotTabbedPanel(controller.robotPanelNumber);
 
-				
-				if (controller.isLTPressed()){
-					int value = Integer.parseInt(panel.teleoperated.highGoalField.getText());
-					value++;
-					panel.teleoperated.highGoalField.setText("" + value);
-				}
-				if (controller.isRTPressed()){
-					int value = Integer.parseInt(panel.teleoperated.lowGoalField.getText());
-					value++;
-					panel.teleoperated.lowGoalField.setText("" + value);
-				}
-				if (controller.isAPressed()){
-					int value = Integer.parseInt(panel.teleoperated.gearField.getText());
-					value++;
-					panel.teleoperated.gearField.setText("" + value);
-				}
-				if (controller.isLBPressed()){
-					int value = Integer.parseInt(panel.teleoperated.blocksField.getText());
-					value++;
-					panel.teleoperated.blocksField.setText("" +value);;
-				}
-				if (controller.isYPressed()){
-					int value = Integer.parseInt(panel.teleoperated.climbingField.getText());
-					value++;
-					panel.teleoperated.blocksField.setText("" +value);;
-				}
-				//Removing stuff
 				if (controller.isLTPressed()&& controller.isLSPressed()){
 					int value = Integer.parseInt(panel.teleoperated.highGoalField.getText());
 					value--;
+					panel.teleoperated.highGoalField.setText("" + value);
+				}
+				else if (controller.isLTPressed()){
+					int value = Integer.parseInt(panel.teleoperated.highGoalField.getText());
+					value++;
 					panel.teleoperated.highGoalField.setText("" + value);
 				}
 				if (controller.isRTPressed()&& controller.isLSPressed()){
@@ -134,9 +112,19 @@ public class Controls extends ControlScheme {
 					value--;
 					panel.teleoperated.lowGoalField.setText("" + value);
 				}
+				else if (controller.isRTPressed()){
+					int value = Integer.parseInt(panel.teleoperated.lowGoalField.getText());
+					value++;
+					panel.teleoperated.lowGoalField.setText("" + value);
+				}
 				if (controller.isAPressed()&& controller.isLSPressed()){
 					int value = Integer.parseInt(panel.teleoperated.gearField.getText());
 					value--;
+					panel.teleoperated.gearField.setText("" + value);
+				}
+				else if (controller.isAPressed()){
+					int value = Integer.parseInt(panel.teleoperated.gearField.getText());
+					value++;
 					panel.teleoperated.gearField.setText("" + value);
 				}
 				if (controller.isLBPressed()&& controller.isLSPressed()){
@@ -144,11 +132,27 @@ public class Controls extends ControlScheme {
 					value--;
 					panel.teleoperated.blocksField.setText("" +value);;
 				}
+				else if (controller.isLBPressed()){
+					int value = Integer.parseInt(panel.teleoperated.blocksField.getText());
+					value++;
+					panel.teleoperated.blocksField.setText("" +value);;
+				}
 				if (controller.isYPressed()&& controller.isLSPressed()){
 					int value = Integer.parseInt(panel.teleoperated.climbingField.getText());
 					value--;
 					panel.teleoperated.blocksField.setText("" +value);;
 				}
+				
+				
+				
+				
+				else if (controller.isYPressed()){
+					int value = Integer.parseInt(panel.teleoperated.climbingField.getText());
+					value++;
+					panel.teleoperated.blocksField.setText("" +value);;
+				}
+				//Removing stuff
+				
 				
 							
 				
