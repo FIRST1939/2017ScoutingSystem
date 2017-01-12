@@ -19,14 +19,15 @@ import buildingBlocks.RobotNumber;
 import buildingBlocks.RobotPanel;
 import buildingBlocks.ScoreField;
 import buildingBlocks.ScoreLabel;
+import buildingBlocks.ValueChangeEvent;
+import buildingBlocks.ValueChangeListener;
 
 /**
  * This class governs all the teleoperated interface and data.
  * @author Grayson Spidle
  *
  */
-public class packaged extends RobotPanel {
-	
+public class workign_stuff_die_die_die extends RobotPanel {
 	private static final long serialVersionUID = -8832379680749996395L;
 
 	public Font nameFont = new Font("Tahoma", Font.BOLD, 15);
@@ -36,26 +37,28 @@ public class packaged extends RobotPanel {
 	public ScoreField lowGoalField;
 	public ScoreField highGoalField;
 	public ScoreField gearField;
+	public ScoreField baselineField;
 	public ScoreField totalPointsField;
 	
-	public ScoreField blocksField;
+	public RobotNumber name;
 	
-	public RobotNumber name = new RobotNumber();
 	public ScoreLabel lowGoalLabel;
 	public ScoreLabel highGoalLabel;
 	public ScoreLabel gearLabel;
+	public ScoreLabel baselineLabel;
 	public ScoreLabel totalPointsLabel;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblA;
+	private JLabel lblLb;
 	
-	public ScoreLabel blocksLabel;
-	private ScoreField climbingField;
-	private ScoreLabel climbLabel;
 	
 	/**
 	 * The constructor.
 	 * @param robotNumber The team number.
 	 * @param teamColor The team color.
 	 */
-	public packaged(String robotNumber, Color teamColor) {
+	public workign_stuff_die_die_die(String robotNumber, Color teamColor) {
 		super();
 		this.setBorder(new LineBorder(new Color(0, 0, 0)));
 		this.setBackground(teamColor);
@@ -69,7 +72,7 @@ public class packaged extends RobotPanel {
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("84px:grow"),
+				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,},
 			new RowSpec[] {
 				FormSpecs.RELATED_GAP_ROWSPEC,
@@ -94,6 +97,7 @@ public class packaged extends RobotPanel {
 				RowSpec.decode("20px"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
+		
 		name = new RobotNumber(robotNumber);
 		name.setSize(this.getWidth(), 14);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
@@ -105,40 +109,37 @@ public class packaged extends RobotPanel {
 		lowGoalLabel.setFont(scoreLabelFont);
 		this.add(lowGoalLabel, "2, 6, fill, center");
 		
+		lblNewLabel = new JLabel("RT ");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblNewLabel, "6, 6");
+		
 		highGoalLabel = new ScoreLabel("High Goal");
 		highGoalLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		highGoalLabel.setFont(scoreLabelFont);
 		this.add(highGoalLabel, "2, 8, fill, center");
 		
-		climbLabel = new ScoreLabel("Blocks");
-		climbLabel.setText("Climbing");
-		climbLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		climbLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
-		add(climbLabel, "8, 8, right, default");
-		
-		climbingField = new ScoreField();
-		climbingField.setText("0");
-		climbingField.setHorizontalAlignment(SwingConstants.RIGHT);
-		climbingField.setFont(new Font("Dialog", Font.PLAIN, 15));
-		climbingField.setEditable(false);
-		climbingField.setColumns(10);
-		add(climbingField, "10, 8, fill, default");
+		lblNewLabel_1 = new JLabel("LT");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblNewLabel_1, "6, 8");
 		
 		gearLabel = new ScoreLabel("Gears");
 		gearLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		gearLabel.setFont(scoreLabelFont);
 		this.add(gearLabel, "2, 10, fill, center");
 		
-		blocksLabel = new ScoreLabel("Blocks");
-		blocksLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		blocksLabel.setFont(scoreLabelFont);
-		this.add(blocksLabel, "8, 6, fill, center");
+		lblA = new JLabel("A");
+		lblA.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblA, "6, 10");
+		
+		baselineLabel = new ScoreLabel("Baseline");
+		baselineLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		baselineLabel.setFont(scoreLabelFont);
+		this.add(baselineLabel, "2, 12, fill, center");
 		
 		lowGoalField = new ScoreField();
 		lowGoalField.setHorizontalAlignment(SwingConstants.TRAILING);
 		lowGoalField.setFont(scoreFieldFont);
 		lowGoalField.setText("0");
-		lowGoalField.setName("lowGoalField");
 		lowGoalField.setEditable(false);
 		this.add(lowGoalField, "4, 6, fill, fill");
 		lowGoalField.setColumns(10);
@@ -146,7 +147,6 @@ public class packaged extends RobotPanel {
 		highGoalField = new ScoreField();
 		highGoalField.setFont(scoreFieldFont);
 		highGoalField.setText("0");
-		highGoalField.setName("highGoalField");
 		highGoalField.setHorizontalAlignment(SwingConstants.RIGHT);
 		highGoalField.setEditable(false);
 		this.add(highGoalField, "4, 8, fill, fill");
@@ -157,30 +157,23 @@ public class packaged extends RobotPanel {
 		gearField.setHorizontalAlignment(SwingConstants.RIGHT);
 		gearField.setFont(scoreFieldFont);
 		gearField.setText("0");
-		gearField.setName("gearField");
 		this.add(gearField, "4, 10, fill, fill");
 		gearField.setColumns(10);
 		
-		totalPointsLabel = new ScoreLabel("Total Points");
-		totalPointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		totalPointsLabel.setFont(scoreLabelFont);
-		this.add(totalPointsLabel, "6, 20, fill, center");
+		baselineField = new ScoreField();
+		baselineField.setEditable(false);
+		baselineField.setText("0");
+		baselineField.setName("baselineField");
+		baselineField.setHorizontalAlignment(SwingConstants.RIGHT);
+		baselineField.setFont(scoreFieldFont);
+		this.add(baselineField, "4, 12, fill, fill");
+		baselineField.setColumns(10);
 		
-		totalPointsField = new ScoreField();
-		totalPointsField.setEditable(false);
-		totalPointsField.setText("0");
-		totalPointsField.setHorizontalAlignment(SwingConstants.CENTER);
-		totalPointsField.setFont(scoreFieldFont);
-		this.add(totalPointsField, "6, 22, fill, fill");
-		totalPointsField.setColumns(10);
+		lblLb = new JLabel("LB");
+		lblLb.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblLb, "6, 12");
 		
-		blocksField = new ScoreField();
-		blocksField.setEditable(false);
-		blocksField.setText("0");
-		blocksField.setHorizontalAlignment(SwingConstants.RIGHT);
-		blocksField.setFont(scoreFieldFont);
-		this.add(blocksField, "10, 6, fill, fill");
-		blocksField.setColumns(10);
+		
 		
 	}
 }

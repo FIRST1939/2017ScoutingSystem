@@ -28,48 +28,47 @@ public class Controls extends ControlScheme {
 			public void actionPerformed(ActionEvent e) {
 				JController controller = (JController) e.getSource();
 				Robot panel = (Robot) ui.getRobotTabbedPanel(controller.robotPanelNumber);
-				if (controller.isLTPressed()){
+				if (controller.isLBPressed()){
 					int value = Integer.parseInt(panel.autonomous.highGoalField.getText());
-					value++;
+					if(controller.isLSHeld()){
+						value--;
+					}
+					else{
+						value++;
+					}
 					panel.autonomous.highGoalField.setText("" + value);
 				}
-				if (controller.isRTPressed()){
+				if (controller.isRBPressed()){
 					int value = Integer.parseInt(panel.autonomous.lowGoalField.getText());
-					value++;
+					if(controller.isLSHeld()){
+						value--;
+					}
+					else{
+						value++;
+					}
 					panel.autonomous.lowGoalField.setText("" + value);
 				}
 				if (controller.isAPressed()){
 					int value = Integer.parseInt(panel.autonomous.gearField.getText());
-					value++;
+					if(controller.isLSHeld()){
+						value--;
+					}
+					else{
+						value++;
+					}
 					panel.autonomous.gearField.setText("" + value);
 				}
-				if (controller.isLBPressed()){
+				if (controller.isBPressed()){
 					int value = Integer.parseInt(panel.autonomous.baselineField.getText());
-					value++;
+					if(controller.isLSHeld()){
+						value--;
+					}
+					else{
+						value++;
+					}
 					panel.autonomous.baselineField.setText("" + value);
 					
-				}
-				//Removing stuff
-				if (controller.isLTPressed() && controller.isLSPressed()){
-					int value = Integer.parseInt(panel.autonomous.highGoalField.getText());
-					value--;
-					panel.autonomous.highGoalField.setText("" + value);
-				}
-				if (controller.isRTPressed()&& controller.isLSPressed()){
-					int value = Integer.parseInt(panel.autonomous.lowGoalField.getText());
-					value--;
-					panel.autonomous.lowGoalField.setText("" + value);
-				}
-				if (controller.isAPressed()&& controller.isLSPressed()){
-					int value = Integer.parseInt(panel.autonomous.gearField.getText());
-					value--;
-					panel.autonomous.gearField.setText("" + value);
-				}
-				if (controller.isLBPressed()&& controller.isLSPressed()){
-					int value = Integer.parseInt(panel.autonomous.baselineField.getText());
-					value--;
-					panel.autonomous.baselineField.setText("" + value);
-					
+				
 				}
 				
 				
@@ -78,6 +77,7 @@ public class Controls extends ControlScheme {
 					panel.setSelectedIndex(1);
 					controller.setActionListener(teleoperated);
 				}
+				
 				
 				// Suspends the thread for DELAY amount of milliseconds
 				try {
@@ -99,7 +99,7 @@ public class Controls extends ControlScheme {
 
 				
 				
-				if (controller.isLTPressed()){
+				if (controller.isLBPressed()){
 					
 					int value = Integer.parseInt(panel.teleoperated.highGoalField.getText());
 					if(controller.isLSHeld()){
@@ -111,7 +111,7 @@ public class Controls extends ControlScheme {
 					panel.teleoperated.highGoalField.setText("" + value);
 				}
 				
-				if (controller.isRTPressed()){
+				if (controller.isRBPressed()){
 					int value = Integer.parseInt(panel.teleoperated.lowGoalField.getText());
 					if(controller.isLSHeld()){
 						value--;
@@ -131,7 +131,7 @@ public class Controls extends ControlScheme {
 					}
 					panel.teleoperated.gearField.setText("" + value);
 				}
-				if (controller.isLBPressed()){
+				if (controller.isBPressed()){
 					int value = Integer.parseInt(panel.teleoperated.blocksField.getText());
 					if(controller.isLSHeld()){
 						value--;
@@ -146,7 +146,7 @@ public class Controls extends ControlScheme {
 				
 				
 				
-				else if (controller.isYPressed()){
+				if (controller.isYPressed()){
 					int value = Integer.parseInt(panel.teleoperated.climbingField.getText());
 					if(controller.isLSHeld()){
 						value--;
@@ -170,9 +170,10 @@ public class Controls extends ControlScheme {
 				// Suspends the thread for DELAY amount of miliseconds
 				try {
 					Thread.sleep(DELAY);
-					System.err.println("Unable to sleep the thread.");
+					
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
+					System.err.println("Unable to sleep the thread.");
 				}
 			}
 		});
