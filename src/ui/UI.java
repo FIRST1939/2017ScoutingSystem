@@ -8,15 +8,20 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import com.google.gson.stream.JsonReader;
+
 import buildingBlocks.RobotNumber;
 import buildingBlocks.RobotTabbedPanel;
 import buildingBlocks.UIV3;
+import elements.Parser;
 import elements.Robot;
 import elements.Tools;
 
@@ -35,7 +40,9 @@ public class UI extends UIV3 implements ActionListener {
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					try {
+						
 						List<String> teamNums = Tools.getTeamNumbers(matchField.getText());
+								
 						List<RobotNumber> autoNums = new Vector<RobotNumber>();
 						List<RobotNumber> teleNums = new Vector<RobotNumber>();
 						for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {

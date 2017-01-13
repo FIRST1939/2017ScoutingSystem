@@ -8,7 +8,7 @@ import com.google.gson.stream.JsonReader;
 
 public abstract class Parser<T> {
 	
-	protected File file;
+	public static File file;
 	public JsonReader reader;
 	
 	public Parser(File inputFile) {

@@ -42,7 +42,12 @@ public class MatchParser extends Parser<Match> {
 		reader.endObject();
 		return output;
 	}
-
+	protected Match[] readAll() throws IOException {
+		return null;
+		
+		
+	}
+	
 	private List<Alliance> readAlliances(JsonReader reader) throws IOException {
 		List<Alliance> output = new Vector<Alliance>();
 		reader.beginArray();
