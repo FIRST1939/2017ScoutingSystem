@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -15,22 +16,21 @@ import java.util.Vector;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import com.adithyasairam.tba4j.Events;
-import com.adithyasairam.tba4j.models.Match;
-import com.adithyasairam.tba4j.models.Match.Alliance;
+import com.google.gson.stream.JsonReader;
 
 import buildingBlocks.RobotNumber;
 import buildingBlocks.RobotTabbedPanel;
 import buildingBlocks.UIV3;
+import elements.Parser;
 import elements.Robot;
+import elements.Tools;
+import javax.swing.JMenuItem;
 
 public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
-	public Match[] fullMatches;
+	
 	public JTextField matchField;
-	Events ev = new Events();
-	public int countOfMatches = 0;
+	
 	public workign_stuff_die_die_die() {
-		ITEM_IMPORT_TEAM_NUMBERS.setText("Next");
 		matchField = new JTextField();
 		matchField.addKeyListener(new KeyListener() {
 			@Override
@@ -40,30 +40,27 @@ public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					ArrayList<String> teamNums = new ArrayList<String>();
-					fullMatches = ev.getEventMatches(matchField.getText());
-					List<String> autoNums = new Vector<String>();
-					List<String> teleNums = new Vector<String>();
-					Match newmatch = fullMatches[countOfMatches];
-					countOfMatches++;
-					Alliance[] ally = newmatch.alliances;
-					for(int i =0; i<ally.length; i++){
-						if(i<=3){
-							RobotNumber
-							autoNums.add(ally);
+					try {
+						
+						List<String> teamNums = Tools.getTeamNumbers(matchField.getText());
+								
+						List<RobotNumber> autoNums = new Vector<RobotNumber>();
+						List<RobotNumber> teleNums = new Vector<RobotNumber>();
+						for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : workign_stuff_die_die_die.this.panels) {
+							autoNums.add(rp.autonomous.name);
+							teleNums.add(rp.teleoperated.name);
 						}
+						for (int i = 0; i < Math.min(teamNums.size(), autoNums.size()); i++) {
+							autoNums.get(i).setText(teamNums.get(i));
+							teleNums.get(i).setText(teamNums.get(i));
+						}
+						matchField.setText("");
+						System.out.println("Successfully imported: " + teamNums.toString());
+					} catch (FileNotFoundException e) {
+						System.err.println("Invalid match id: " + matchField.getText());
+					} catch (IOException e) {
+						System.err.println("Unable to import team numbers");
 					}
-					
-					for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : workign_stuff_die_die_die.this.panels) {
-						autoNums.add(rp.autonomous.name);
-						teleNums.add(rp.teleoperated.name);
-					}
-					for (int i = 0; i < Math.min(teamNums.size(), autoNums.size()); i++) {
-						autoNums.get(i).setText(teamNums.get(i));
-						teleNums.get(i).setText(teamNums.get(i));
-					}
-					matchField.setText("");
-					System.out.println("Successfully imported: " + teamNums.toString());
 				}
 			}
 
@@ -93,6 +90,9 @@ public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
 		
 		this.setVisible(true);
 		this.setTitle("FRC SteamWorks - Scouting Program");
+		
+		JMenuItem mntmTeamNumGetter = new JMenuItem("Team NUM GETTER");
+		MENU_COMPETITION.add(mntmTeamNumGetter);
 	}
 	
 }

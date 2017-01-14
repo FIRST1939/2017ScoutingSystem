@@ -88,7 +88,7 @@ public class UI extends UIV3 implements ActionListener {
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		
 		this.setVisible(true);
-		this.setTitle("FRC Steam Powered - Scouting Program");
+		this.setTitle("FRC SteamWorks - Scouting Program");
 	}
 	
 }
