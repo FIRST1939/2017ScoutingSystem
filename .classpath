@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="lib/jinput-2.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/jinput-test.jar"/>
 	<classpathentry kind="lib" path="lib/jinput.jar"/>
-	<classpathentry kind="lib" path="lib/ScoutingSystemLibrary.jar"/>
 	<classpathentry kind="lib" path="lib/tba4j.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/The Java Scouting System"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
