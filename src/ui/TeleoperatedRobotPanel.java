@@ -37,8 +37,13 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 	public ScoreField highGoalField;
 	public ScoreField gearField;
 	public ScoreField totalPointsField;
-	
 	public ScoreField blocksField;
+	
+	public ScoreField lowGoalAttempts;
+	public ScoreField highGoalAttempts;
+	public ScoreField gearAttempts;
+	public ScoreField baselineAttempts;
+	public ScoreField climbingAttempts;
 	
 	public RobotNumber name = new RobotNumber();
 	public ScoreLabel lowGoalLabel;
@@ -69,7 +74,7 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("84px:grow"),
+				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,},
 			new RowSpec[] {
 				FormSpecs.RELATED_GAP_ROWSPEC,
@@ -110,38 +115,27 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		highGoalLabel.setFont(scoreLabelFont);
 		this.add(highGoalLabel, "2, 8, fill, center");
 		
-		climbLabel = new ScoreLabel("Blocks");
-		climbLabel.setText("Climbing");
-		climbLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		climbLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
-		add(climbLabel, "8, 8, right, default");
-		
-		climbingField = new ScoreField();
-		climbingField.setText("0");
-		climbingField.setHorizontalAlignment(SwingConstants.RIGHT);
-		climbingField.setFont(new Font("Dialog", Font.PLAIN, 15));
-		climbingField.setEditable(false);
-		climbingField.setColumns(10);
-		add(climbingField, "10, 8, fill, default");
-		
 		gearLabel = new ScoreLabel("Gears");
 		gearLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		gearLabel.setFont(scoreLabelFont);
 		this.add(gearLabel, "2, 10, fill, center");
 		
-		blocksLabel = new ScoreLabel("Blocks");
-		blocksLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		blocksLabel.setFont(scoreLabelFont);
-		this.add(blocksLabel, "8, 6, fill, center");
-		
 		lowGoalField = new ScoreField();
-		lowGoalField.setHorizontalAlignment(SwingConstants.TRAILING);
+		lowGoalField.setHorizontalAlignment(SwingConstants.RIGHT);
 		lowGoalField.setFont(scoreFieldFont);
 		lowGoalField.setText("0");
 		lowGoalField.setName("lowGoalField");
 		lowGoalField.setEditable(false);
 		this.add(lowGoalField, "4, 6, fill, fill");
 		lowGoalField.setColumns(10);
+		
+		lowGoalAttempts = new ScoreField();
+		lowGoalAttempts.setHorizontalAlignment(SwingConstants.RIGHT);
+		lowGoalAttempts.setFont(scoreFieldFont);
+		lowGoalAttempts.setText("0");
+		lowGoalAttempts.setEditable(false);
+		this.add(lowGoalAttempts, "6, 6, fill, fill");
+		lowGoalAttempts.setColumns(10);
 		
 		highGoalField = new ScoreField();
 		highGoalField.setFont(scoreFieldFont);
@@ -152,6 +146,14 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		this.add(highGoalField, "4, 8, fill, fill");
 		highGoalField.setColumns(10);
 		
+		highGoalAttempts = new ScoreField();
+		highGoalAttempts.setHorizontalAlignment(SwingConstants.RIGHT);
+		highGoalAttempts.setFont(scoreFieldFont);
+		highGoalAttempts.setText("0");
+		highGoalAttempts.setEditable(false);
+		this.add(highGoalAttempts, "6, 8, fill, fill");
+		highGoalAttempts.setColumns(10);
+		
 		gearField = new ScoreField();
 		gearField.setEditable(false);
 		gearField.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -161,13 +163,48 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		this.add(gearField, "4, 10, fill, fill");
 		gearField.setColumns(10);
 		
+		gearAttempts = new ScoreField();
+		gearAttempts.setHorizontalAlignment(SwingConstants.RIGHT);
+		gearAttempts.setFont(scoreFieldFont);
+		gearAttempts.setText("0");
+		gearAttempts.setEditable(false);
+		this.add(gearAttempts, "6, 10, fill, fill");
+		gearAttempts.setColumns(10);
+		
+		blocksLabel = new ScoreLabel("Blocks");
+		blocksLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		blocksLabel.setFont(scoreLabelFont);
+		this.add(blocksLabel, "2, 12, fill, center");
+		
 		blocksField = new ScoreField();
 		blocksField.setEditable(false);
 		blocksField.setText("0");
 		blocksField.setHorizontalAlignment(SwingConstants.RIGHT);
 		blocksField.setFont(scoreFieldFont);
-		this.add(blocksField, "10, 6, fill, fill");
+		this.add(blocksField, "4, 12, fill, fill");
 		blocksField.setColumns(10);
+		
+		climbingAttempts = new ScoreField();
+		climbingAttempts.setHorizontalAlignment(SwingConstants.RIGHT);
+		climbingAttempts.setFont(scoreFieldFont);
+		climbingAttempts.setText("0");
+		climbingAttempts.setEditable(false);
+		this.add(climbingAttempts, "6, 14, fill, fill");
+		climbingAttempts.setColumns(10);
+		
+		climbLabel = new ScoreLabel("Climbing");
+		climbLabel.setText("Climbing");
+		climbLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		climbLabel.setFont(scoreLabelFont);
+		add(climbLabel, "2, 14, left, default");
+		
+		climbingField = new ScoreField();
+		climbingField.setText("false");
+		climbingField.setHorizontalAlignment(SwingConstants.RIGHT);
+		climbingField.setFont(scoreLabelFont);
+		climbingField.setEditable(false);
+		climbingField.setColumns(10);
+		add(climbingField, "4, 14, fill, default");
 		
 	}
 }
