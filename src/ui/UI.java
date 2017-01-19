@@ -28,6 +28,7 @@ import elements.Tools;
 public class UI extends UIV3 implements ActionListener {
 	
 	public JTextField matchField;
+	ArrayList<String> fullMatches = new ArrayList<String>();
 	
 	public UI() {
 		matchField = new JTextField();
@@ -65,7 +66,11 @@ public class UI extends UIV3 implements ActionListener {
 
 			@Override
 			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
+
+			
 		});
 		this.MENU_BAR.add(matchField);
 		

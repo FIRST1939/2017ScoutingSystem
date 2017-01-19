@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
@@ -24,13 +26,26 @@ import buildingBlocks.UIV3;
 import elements.Parser;
 import elements.Robot;
 import elements.Tools;
+import tools.FileUtils;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JMenuItem;
 
 public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
 	
 	public JTextField matchField;
+	ArrayList<String> fullMatches = new ArrayList<String>();
+	public int matchCount = 0;
+	public UIV3 ui = new UIV3();
 	
 	public workign_stuff_die_die_die() {
+		ITEM_TEAM_GET.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				setNewFile(fullMatches, matchCount);			
+			}
+		});
 		matchField = new JTextField();
 		matchField.addKeyListener(new KeyListener() {
 			@Override
@@ -66,9 +81,14 @@ public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
 
 			@Override
 			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
+
+			
 		});
 		this.MENU_BAR.add(matchField);
+		
 		
 		// Initializing/Adding all the RobotTabbedPanels
 		for (int i = 1; i < 7; i++) {
@@ -91,8 +111,44 @@ public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
 		this.setVisible(true);
 		this.setTitle("FRC SteamWorks - Scouting Program");
 		
-		JMenuItem mntmTeamNumGetter = new JMenuItem("Team NUM GETTER");
-		MENU_COMPETITION.add(mntmTeamNumGetter);
+		JMenuItem mntmNext = new JMenuItem("NEXT");
+		mntmNext.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+		});
+		MENU_COMPETITION.add(mntmNext);
+		
 	}
-	
+	public File getEvent() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+		chooser.setCurrentDirectory(defaultSaveFile);
+
+		int result = chooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			 return chooser.getSelectedFile();
+		} else {
+			return null;
+		}
+	}
+	public ArrayList<String> makeArrayList(File file){
+		ArrayList<String> out = new ArrayList<String>();
+		try {
+			out = (ArrayList<String>) FileUtils.read(file);
+			
+			System.out.println(out.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+		
+	}
+	public void setNewFile(ArrayList<String> AL, int matchCount){
+		File f = getEvent();
+		AL = makeArrayList(f);
+		matchCount = 0;
+	}
 }
