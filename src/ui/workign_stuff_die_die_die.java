@@ -3,13 +3,13 @@ package ui;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -18,40 +18,41 @@ import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import com.google.gson.stream.JsonReader;
-
 import buildingBlocks.RobotNumber;
 import buildingBlocks.RobotTabbedPanel;
 import buildingBlocks.UIV3;
-import elements.Parser;
 import elements.Robot;
 import elements.Tools;
 import tools.FileUtils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
 
-public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
+public class UI extends UIV3 implements ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3995649531050160578L;
 	public JTextField matchField;
-	ArrayList<String> fullMatches = new ArrayList<String>();
+	ArrayList<ArrayList<String>> fullMatches = new ArrayList<ArrayList<String>>();
 	public int matchCount = 0;
 	public UIV3 ui = new UIV3();
 	
-	public workign_stuff_die_die_die() {
-		ITEM_TEAM_GET.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				setNewFile(fullMatches, matchCount);			
-			}
-		});
+	public UI() {
+		ITEM_IMPORT_TEAM_NUMBERS.addActionListener(this);
+		ITEM_IMPORT_TEAM_NUMBERS.setActionCommand("Import Teams");
+		
+		ITEM_TEAM_NEXT.addActionListener(this);
+		ITEM_TEAM_NEXT.setActionCommand("Get Next");
+		
 		matchField = new JTextField();
 		matchField.addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 			}
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -61,7 +62,7 @@ public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
 								
 						List<RobotNumber> autoNums = new Vector<RobotNumber>();
 						List<RobotNumber> teleNums = new Vector<RobotNumber>();
-						for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : workign_stuff_die_die_die.this.panels) {
+						for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
 							autoNums.add(rp.autonomous.name);
 							teleNums.add(rp.teleoperated.name);
 						}
@@ -111,14 +112,36 @@ public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
 		this.setVisible(true);
 		this.setTitle("FRC SteamWorks - Scouting Program");
 		
-		JMenuItem mntmNext = new JMenuItem("NEXT");
-		mntmNext.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
+	}
+	@Override
+	public void actionPerformed(ActionEvent event){
+		if( event.getActionCommand().equals("Import Teams")){
+			try {
+				fullMatches = ui.makeFullArray(matchCount);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		});
-		MENU_COMPETITION.add(mntmNext);
-		
+			ui.setMatchReset(matchCount);
+		}
+		else if (event.getActionCommand().equals("Get Next")){
+			List<String> teamNums =fullMatches.get(matchCount);
+			List<RobotNumber> autoNums = new Vector<RobotNumber>();
+			List<RobotNumber> teleNums = new Vector<RobotNumber>();
+			for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
+				autoNums.add(rp.autonomous.name);
+				teleNums.add(rp.teleoperated.name);
+			}
+			for (int i = 0; i < Math.min(teamNums.size(), autoNums.size()); i++) {
+				autoNums.get(i).setText(teamNums.get(i));
+				teleNums.get(i).setText(teamNums.get(i));
+			}
+			matchField.setText("");
+			System.out.println("Successfully imported: " + teamNums.toString());
+			matchCount++;
+		}
+		else {
+			super.actionPerformed(event);
+		}
 	}
 	public File getEvent() {
 		JFileChooser chooser = new JFileChooser();
@@ -146,9 +169,5 @@ public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
 		return out;
 		
 	}
-	public void setNewFile(ArrayList<String> AL, int matchCount){
-		File f = getEvent();
-		AL = makeArrayList(f);
-		matchCount = 0;
-	}
+	
 }

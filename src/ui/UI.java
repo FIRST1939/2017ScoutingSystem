@@ -6,37 +6,77 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-
-import com.google.gson.stream.JsonReader;
 
 import buildingBlocks.RobotNumber;
 import buildingBlocks.RobotTabbedPanel;
 import buildingBlocks.UIV3;
-import elements.Parser;
 import elements.Robot;
 import elements.Tools;
+import tools.FileUtils;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UI extends UIV3 implements ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3995649531050160578L;
 	public JTextField matchField;
-	ArrayList<String> fullMatches = new ArrayList<String>();
+	ArrayList<ArrayList<String>> fullMatches = new ArrayList<ArrayList<String>>();
+	public int matchCount = 0;
+	public UIV3 ui = new UIV3();
 	
 	public UI() {
+//		ITEM_IMPORT_TEAM_NUMBERS.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseReleased(MouseEvent arg0) {
+//				try {
+//					fullMatches = ui.makeFullArray(matchCount);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				ui.setMatchReset(matchCount);
+//			}
+//		});
+//		ITEM_TEAM_NEXT.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseReleased(MouseEvent arg0) {
+//				List<String> teamNums =fullMatches.get(matchCount);
+//				List<RobotNumber> autoNums = new Vector<RobotNumber>();
+//				List<RobotNumber> teleNums = new Vector<RobotNumber>();
+//				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
+//					autoNums.add(rp.autonomous.name);
+//					teleNums.add(rp.teleoperated.name);
+//				}
+//				for (int i = 0; i < Math.min(teamNums.size(), autoNums.size()); i++) {
+//					autoNums.get(i).setText(teamNums.get(i));
+//					teleNums.get(i).setText(teamNums.get(i));
+//				}
+//				matchField.setText("");
+//				System.out.println("Successfully imported: " + teamNums.toString());
+//				matchCount++;
+//				
+//			}
+//		});
 		matchField = new JTextField();
 		matchField.addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 			}
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -74,13 +114,14 @@ public class UI extends UIV3 implements ActionListener {
 		});
 		this.MENU_BAR.add(matchField);
 		
+		
 		// Initializing/Adding all the RobotTabbedPanels
 		for (int i = 1; i < 7; i++) {
 			if (i <= 3) {
-				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.RED), new TeleoperatedRobotPanel("Team " + i, Color.RED)));	
+				getContentPane().add(new Robot(new AutonomousRobotPanel("Team " + i, Color.RED), new TeleoperatedRobotPanel("Team " + i, Color.RED)));	
 			}
 			else {
-				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.BLUE), new TeleoperatedRobotPanel("Team " + i, Color.BLUE)));
+				getContentPane().add(new Robot(new AutonomousRobotPanel("Team " + i, Color.BLUE), new TeleoperatedRobotPanel("Team " + i, Color.BLUE)));
 			}
 		}
 		
@@ -94,6 +135,33 @@ public class UI extends UIV3 implements ActionListener {
 		
 		this.setVisible(true);
 		this.setTitle("FRC SteamWorks - Scouting Program");
+		
+	}
+	public File getEvent() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+		chooser.setCurrentDirectory(defaultSaveFile);
+
+		int result = chooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			 return chooser.getSelectedFile();
+		} else {
+			return null;
+		}
+	}
+	public ArrayList<String> makeArrayList(File file){
+		ArrayList<String> out = new ArrayList<String>();
+		try {
+			out = (ArrayList<String>) FileUtils.read(file);
+			
+			System.out.println(out.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+		
 	}
 	
 }

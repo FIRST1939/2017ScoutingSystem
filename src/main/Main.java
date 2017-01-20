@@ -35,6 +35,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		ui = new UI();
+		System.setErr(System.err);
 		controls = new Controls(ui);
 		
 		ui.addWindowListener(new WindowListener() {
