@@ -39,6 +39,10 @@ public class AutonomousRobotPanel extends RobotPanel {
 	public ScoreField gearField;
 	public ScoreField baselineField;
 	public ScoreField totalPointsField;
+
+	public ScoreField lowGoalAttempts;
+	public ScoreField highGoalAttempts;
+	public ScoreField gearAttempts;
 	
 	public RobotNumber name;
 	
@@ -121,12 +125,20 @@ public class AutonomousRobotPanel extends RobotPanel {
 		this.add(baselineLabel, "2, 12, fill, center");
 		
 		lowGoalField = new ScoreField();
-		lowGoalField.setHorizontalAlignment(SwingConstants.TRAILING);
+		lowGoalField.setHorizontalAlignment(SwingConstants.RIGHT);
 		lowGoalField.setFont(scoreFieldFont);
 		lowGoalField.setText("0");
 		lowGoalField.setEditable(false);
 		this.add(lowGoalField, "4, 6, fill, fill");
 		lowGoalField.setColumns(10);
+		
+		lowGoalAttempts = new ScoreField();
+		lowGoalAttempts.setHorizontalAlignment(SwingConstants.RIGHT);
+		lowGoalAttempts.setFont(scoreFieldFont);
+		lowGoalAttempts.setText("0");
+		lowGoalAttempts.setEditable(false);
+		this.add(lowGoalAttempts, "6, 6, fill, fill");
+		lowGoalAttempts.setColumns(10);
 		
 		highGoalField = new ScoreField();
 		highGoalField.setFont(scoreFieldFont);
@@ -136,6 +148,14 @@ public class AutonomousRobotPanel extends RobotPanel {
 		this.add(highGoalField, "4, 8, fill, fill");
 		highGoalField.setColumns(10);
 		
+		highGoalAttempts = new ScoreField();
+		highGoalAttempts.setHorizontalAlignment(SwingConstants.RIGHT);
+		highGoalAttempts.setFont(scoreFieldFont);
+		highGoalAttempts.setText("0");
+		highGoalAttempts.setEditable(false);
+		this.add(highGoalAttempts, "6, 8, fill, fill");
+		highGoalAttempts.setColumns(10);
+		
 		gearField = new ScoreField();
 		gearField.setEditable(false);
 		gearField.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -144,15 +164,22 @@ public class AutonomousRobotPanel extends RobotPanel {
 		this.add(gearField, "4, 10, fill, fill");
 		gearField.setColumns(10);
 		
+		gearAttempts = new ScoreField();
+		gearAttempts.setHorizontalAlignment(SwingConstants.RIGHT);
+		gearAttempts.setFont(scoreFieldFont);
+		gearAttempts.setText("0");
+		gearAttempts.setEditable(false);
+		this.add(gearAttempts, "6, 10, fill, fill");
+		gearAttempts.setColumns(10);
+		
 		baselineField = new ScoreField();
 		baselineField.setEditable(false);
-		baselineField.setText("0");
+		baselineField.setText("false");
 		baselineField.setName("baselineField");
 		baselineField.setHorizontalAlignment(SwingConstants.RIGHT);
 		baselineField.setFont(scoreFieldFont);
 		this.add(baselineField, "4, 12, fill, fill");
 		baselineField.setColumns(10);
-		
 		
 		
 	}

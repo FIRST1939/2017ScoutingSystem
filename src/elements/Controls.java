@@ -29,46 +29,81 @@ public class Controls extends ControlScheme {
 				JController controller = (JController) e.getSource();
 				Robot panel = (Robot) ui.getRobotTabbedPanel(controller.robotPanelNumber);
 				if (controller.isLBPressed()){
-					int value = Integer.parseInt(panel.autonomous.highGoalField.getText());
-					if(controller.isLSHeld()){
-						value--;
+					if (controller.isLTHeld()) {
+						int value = Integer.parseInt(panel.autonomous.highGoalAttempts.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.autonomous.highGoalAttempts.setText("" + value);
 					}
-					else{
-						value++;
+					else {
+						int value = Integer.parseInt(panel.autonomous.highGoalField.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.autonomous.highGoalField.setText("" + value);
 					}
-					panel.autonomous.highGoalField.setText("" + value);
+					
 				}
 				if (controller.isRBPressed()){
-					int value = Integer.parseInt(panel.autonomous.lowGoalField.getText());
-					if(controller.isLSHeld()){
-						value--;
+					if (controller.isLTHeld()) {
+						int value = Integer.parseInt(panel.autonomous.lowGoalAttempts.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.autonomous.lowGoalAttempts.setText("" + value);
 					}
-					else{
-						value++;
+					else {
+						int value = Integer.parseInt(panel.autonomous.lowGoalField.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.autonomous.lowGoalField.setText("" + value);
 					}
-					panel.autonomous.lowGoalField.setText("" + value);
 				}
 				if (controller.isAPressed()){
-					int value = Integer.parseInt(panel.autonomous.gearField.getText());
-					if(controller.isLSHeld()){
-						value--;
+					if (controller.isLTHeld()) {
+						int value = Integer.parseInt(panel.autonomous.gearAttempts.getText());
+						if (controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.autonomous.gearAttempts.setText("" + value);
 					}
-					else{
-						value++;
+					else {
+						int value = Integer.parseInt(panel.autonomous.gearField.getText());
+						if (controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.autonomous.gearField.setText("" + value);
 					}
-					panel.autonomous.gearField.setText("" + value);
 				}
-				if (controller.isBPressed()){
-					int value = Integer.parseInt(panel.autonomous.baselineField.getText());
-					if(controller.isLSHeld()){
-						value--;
+				if (controller.isBPressed()) {
+					boolean value = Boolean.parseBoolean(panel.autonomous.baselineField.getText());
+					if (controller.isLSHeld()){
+						value = !value;
 					}
-					else{
-						value++;
+					else {
+						value = !value;
 					}
 					panel.autonomous.baselineField.setText("" + value);
-					
-				
 				}
 				
 				
@@ -96,40 +131,73 @@ public class Controls extends ControlScheme {
 			public void actionPerformed(ActionEvent e) {
 				JController controller = (JController) e.getSource();
 				Robot panel = (Robot) ui.getRobotTabbedPanel(controller.robotPanelNumber);
-
-				
 				
 				if (controller.isLBPressed()){
-					
-					int value = Integer.parseInt(panel.teleoperated.highGoalField.getText());
-					if(controller.isLSHeld()){
-						value--;
+					if (controller.isLTHeld()) {
+						int value = Integer.parseInt(panel.teleoperated.highGoalAttempts.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.teleoperated.highGoalAttempts.setText("" + value);
 					}
-					else{
-						value++;
+					else {
+						int value = Integer.parseInt(panel.teleoperated.highGoalField.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.teleoperated.highGoalField.setText("" + value);
 					}
-					panel.teleoperated.highGoalField.setText("" + value);
 				}
 				
 				if (controller.isRBPressed()){
-					int value = Integer.parseInt(panel.teleoperated.lowGoalField.getText());
-					if(controller.isLSHeld()){
-						value--;
+					if (controller.isLTHeld()) {
+						int value = Integer.parseInt(panel.teleoperated.lowGoalAttempts.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.teleoperated.lowGoalAttempts.setText("" + value);
 					}
-					else{
-						value++;
+					else {
+						int value = Integer.parseInt(panel.teleoperated.lowGoalField.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.teleoperated.lowGoalField.setText("" + value);
 					}
-					panel.teleoperated.lowGoalField.setText("" + value);
 				}
 				if (controller.isAPressed()){
-					int value = Integer.parseInt(panel.teleoperated.gearField.getText());
-					if(controller.isLSHeld()){
-						value--;
+					if (controller.isLTHeld()) {
+						int value = Integer.parseInt(panel.teleoperated.gearAttempts.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.teleoperated.gearAttempts.setText("" + value);
 					}
-					else{
-						value++;
+					else {
+						int value = Integer.parseInt(panel.teleoperated.gearField.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.teleoperated.gearField.setText("" + value);
 					}
-					panel.teleoperated.gearField.setText("" + value);
 				}
 				if (controller.isBPressed()){
 					int value = Integer.parseInt(panel.teleoperated.blocksField.getText());
@@ -142,24 +210,29 @@ public class Controls extends ControlScheme {
 					panel.teleoperated.blocksField.setText("" +value);;
 				}
 				
-				
-				
-				
-				
 				if (controller.isYPressed()){
-					int value = Integer.parseInt(panel.teleoperated.climbingField.getText());
-					if(controller.isLSHeld()){
-						value--;
+					if (controller.isLTHeld()) {
+						int value = Integer.parseInt(panel.teleoperated.climbingAttempts.getText());
+						if(controller.isLSHeld()){
+							value--;
+						}
+						else{
+							value++;
+						}
+						panel.teleoperated.climbingAttempts.setText("" +value);
 					}
-					else{
-						value++;
+					else {
+						boolean value = Boolean.parseBoolean(panel.teleoperated.climbingField.getText());
+						if(controller.isLSHeld()){
+							value = !value;
+						}
+						else{
+							value = !value;
+						}
+						panel.teleoperated.climbingField.setText("" +value);
 					}
-					panel.teleoperated.climbingField.setText("" +value);;
+					
 				}
-				//Removing stuff
-				
-				
-							
 				
 				// Switches between autonomous and teleoperated and their respective control schemes
 				if (controller.isStartPressed()) { 
@@ -170,7 +243,6 @@ public class Controls extends ControlScheme {
 				// Suspends the thread for DELAY amount of miliseconds
 				try {
 					Thread.sleep(DELAY);
-					
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 					System.err.println("Unable to sleep the thread.");
