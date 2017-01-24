@@ -45,7 +45,7 @@ public class UI extends UIV3 implements ActionListener {
 		ITEM_IMPORT_TEAM_NUMBERS.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				fullMatches = ui.makeFullArray(matchCount);
+				fullMatches = ui.makeFullArray();
 				ui.setMatchReset(matchCount);
 				
 			}
@@ -65,8 +65,9 @@ public class UI extends UIV3 implements ActionListener {
 					autoNums.get(i).setText(teamNums.get(i));
 					teleNums.get(i).setText(teamNums.get(i));
 				}
+				matchCount++;
 				} 
-
+				
 
 
 		});
