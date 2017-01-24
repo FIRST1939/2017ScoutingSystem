@@ -28,7 +28,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenuItem;
 
-public class UI extends UIV3 implements ActionListener {
+public class U extends UIV3 implements ActionListener {
 	
 	/**
 	 * 
@@ -39,9 +39,7 @@ public class UI extends UIV3 implements ActionListener {
 	public int matchCount = 0;
 	public UIV3 ui = new UIV3();
 	
-	public UI() {
-		JMenuItem ITEM_NEXT = new JMenuItem("NEXT");
-		MENU_COMPETITION.add(ITEM_NEXT);
+	public U() {
 		ITEM_IMPORT_TEAM_NUMBERS.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -50,14 +48,14 @@ public class UI extends UIV3 implements ActionListener {
 				
 			}
 		});
-		ITEM_NEXT.addMouseListener(new MouseAdapter() {
+		ITEM_TEAM_GET.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				
-				ArrayList<String> teamNums =fullMatches.get(matchCount);
+				TI.setVisible(true);
+				List<String> teamNums =fullMatches.get(matchCount);
 				List<RobotNumber> autoNums = new Vector<RobotNumber>();
 				List<RobotNumber> teleNums = new Vector<RobotNumber>();
-				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
+				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : U.this.panels) {
 					autoNums.add(rp.autonomous.name);
 					teleNums.add(rp.teleoperated.name);
 				}
@@ -65,10 +63,11 @@ public class UI extends UIV3 implements ActionListener {
 					autoNums.get(i).setText(teamNums.get(i));
 					teleNums.get(i).setText(teamNums.get(i));
 				}
-				} 
-
-
-
+				matchField.setText("");
+				System.out.println("Successfully imported: " + teamNums.toString());
+				matchCount++;
+				
+			}
 		});
 		matchField = new JTextField();
 		matchField.addKeyListener(new KeyListener() {
@@ -86,7 +85,7 @@ public class UI extends UIV3 implements ActionListener {
 								
 						List<RobotNumber> autoNums = new Vector<RobotNumber>();
 						List<RobotNumber> teleNums = new Vector<RobotNumber>();
-						for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
+						for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : U.this.panels) {
 							autoNums.add(rp.autonomous.name);
 							teleNums.add(rp.teleoperated.name);
 						}
@@ -118,10 +117,10 @@ public class UI extends UIV3 implements ActionListener {
 		// Initializing/Adding all the RobotTabbedPanels
 		for (int i = 1; i < 7; i++) {
 			if (i <= 3) {
-				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.RED), new TeleoperatedRobotPanel("Team " + i, Color.RED)));	
+				getContentPane().add(new Robot(new AutonomousRobotPanel("Team " + i, Color.RED), new TeleoperatedRobotPanel("Team " + i, Color.RED)));	
 			}
 			else {
-				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.BLUE), new TeleoperatedRobotPanel("Team " + i, Color.BLUE)));
+				getContentPane().add(new Robot(new AutonomousRobotPanel("Team " + i, Color.BLUE), new TeleoperatedRobotPanel("Team " + i, Color.BLUE)));
 			}
 		}
 		
@@ -136,7 +135,8 @@ public class UI extends UIV3 implements ActionListener {
 		this.setVisible(true);
 		this.setTitle("FRC SteamWorks - Scouting Program");
 		
-		
+		JMenuItem ITEM_NEXT = new JMenuItem("NEXT");
+		MENU_COMPETITION.add(ITEM_NEXT);
 		
 	}
 	public File getEvent() {

@@ -3,7 +3,6 @@ package ui;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,31 +27,54 @@ import tools.FileUtils;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class UI extends UIV3 implements ActionListener {
+public class workign_stuff_die_die_die extends UIV3 implements ActionListener {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3995649531050160578L;
+	
 	public JTextField matchField;
 	ArrayList<ArrayList<String>> fullMatches = new ArrayList<ArrayList<String>>();
 	public int matchCount = 0;
 	public UIV3 ui = new UIV3();
 	
-	public UI() {
-		ITEM_IMPORT_TEAM_NUMBERS.addActionListener(this);
-		ITEM_IMPORT_TEAM_NUMBERS.setActionCommand("Import Teams");
-		
-		ITEM_TEAM_NEXT.addActionListener(this);
-		ITEM_TEAM_NEXT.setActionCommand("Get Next");
-		
+	public workign_stuff_die_die_die() {
+		ITEM_IMPORT_TEAM_NUMBERS.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				fullMatches = ui.makeFullArray(matchCount);
+				ui.setMatchReset(matchCount);
+				
+			}
+		});
+		ITEM_TEAM_GET.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				TI.setVisible(true);
+				List<String> teamNums =fullMatches.get(matchCount);
+				List<RobotNumber> autoNums = new Vector<RobotNumber>();
+				List<RobotNumber> teleNums = new Vector<RobotNumber>();
+				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : workign_stuff_die_die_die.this.panels) {
+					autoNums.add(rp.autonomous.name);
+					teleNums.add(rp.teleoperated.name);
+				}
+				for (int i = 0; i < Math.min(teamNums.size(), autoNums.size()); i++) {
+					autoNums.get(i).setText(teamNums.get(i));
+					teleNums.get(i).setText(teamNums.get(i));
+				}
+				matchField.setText("");
+				System.out.println("Successfully imported: " + teamNums.toString());
+				matchCount++;
+				
+			}
+		});
 		matchField = new JTextField();
 		matchField.addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 			}
 
-			@SuppressWarnings("unchecked")
+		
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -62,7 +84,7 @@ public class UI extends UIV3 implements ActionListener {
 								
 						List<RobotNumber> autoNums = new Vector<RobotNumber>();
 						List<RobotNumber> teleNums = new Vector<RobotNumber>();
-						for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
+						for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : workign_stuff_die_die_die.this.panels) {
 							autoNums.add(rp.autonomous.name);
 							teleNums.add(rp.teleoperated.name);
 						}
@@ -94,10 +116,10 @@ public class UI extends UIV3 implements ActionListener {
 		// Initializing/Adding all the RobotTabbedPanels
 		for (int i = 1; i < 7; i++) {
 			if (i <= 3) {
-				getContentPane().add(new Robot(new AutonomousRobotPanel("Team " + i, Color.RED), new TeleoperatedRobotPanel("Team " + i, Color.RED)));	
+				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.RED), new TeleoperatedRobotPanel("Team " + i, Color.RED)));	
 			}
 			else {
-				getContentPane().add(new Robot(new AutonomousRobotPanel("Team " + i, Color.BLUE), new TeleoperatedRobotPanel("Team " + i, Color.BLUE)));
+				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.BLUE), new TeleoperatedRobotPanel("Team " + i, Color.BLUE)));
 			}
 		}
 		
@@ -112,36 +134,6 @@ public class UI extends UIV3 implements ActionListener {
 		this.setVisible(true);
 		this.setTitle("FRC SteamWorks - Scouting Program");
 		
-	}
-	@Override
-	public void actionPerformed(ActionEvent event){
-		if( event.getActionCommand().equals("Import Teams")){
-			try {
-				fullMatches = ui.makeFullArray(matchCount);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			ui.setMatchReset(matchCount);
-		}
-		else if (event.getActionCommand().equals("Get Next")){
-			List<String> teamNums =fullMatches.get(matchCount);
-			List<RobotNumber> autoNums = new Vector<RobotNumber>();
-			List<RobotNumber> teleNums = new Vector<RobotNumber>();
-			for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
-				autoNums.add(rp.autonomous.name);
-				teleNums.add(rp.teleoperated.name);
-			}
-			for (int i = 0; i < Math.min(teamNums.size(), autoNums.size()); i++) {
-				autoNums.get(i).setText(teamNums.get(i));
-				teleNums.get(i).setText(teamNums.get(i));
-			}
-			matchField.setText("");
-			System.out.println("Successfully imported: " + teamNums.toString());
-			matchCount++;
-		}
-		else {
-			super.actionPerformed(event);
-		}
 	}
 	public File getEvent() {
 		JFileChooser chooser = new JFileChooser();
