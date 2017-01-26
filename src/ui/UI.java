@@ -49,6 +49,7 @@ public class UI extends UIV3 implements ActionListener {
 				ui.setMatchReset(matchCount);
 				
 			}
+			
 		});
 		ITEM_NEXT.addMouseListener(new MouseAdapter() {
 			@Override
@@ -66,6 +67,7 @@ public class UI extends UIV3 implements ActionListener {
 					teleNums.get(i).setText(teamNums.get(i));
 				}
 				matchCount++;
+				resetBoard();
 				} 
 				
 
@@ -136,6 +138,30 @@ public class UI extends UIV3 implements ActionListener {
 		
 		
 		
+	}
+	public void resetBoard(){
+		for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
+			//Auto Clears
+			rp.autonomous.baselineField.setText("false");
+			rp.autonomous.gearField.setText("0");
+			rp.autonomous.gearAttempts.setText("0");
+			rp.autonomous.lowGoalField.setText("0");
+			rp.autonomous.lowGoalAttempts.setText("0");
+			rp.autonomous.highGoalField.setText("0");
+			rp.autonomous.highGoalAttempts.setText("0");
+			//Tele clears
+			rp.teleoperated.blocksField.setText("0");
+			rp.teleoperated.gearField.setText("0");
+			rp.teleoperated.gearAttempts.setText("0");
+			rp.teleoperated.lowGoalAttempts.setText("0");
+			rp.teleoperated.lowGoalField.setText("0");
+			rp.teleoperated.highGoalAttempts.setText("0");
+			rp.teleoperated.highGoalField.setText("0");
+			rp.teleoperated.climbingAttempts.setText("false");
+			rp.teleoperated.climbingField.setText("false");
+			
+			
+		}
 	}
 	public File getEvent() {
 		JFileChooser chooser = new JFileChooser();
