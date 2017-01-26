@@ -81,10 +81,13 @@ public class UI extends UIV3 implements ActionListener {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					try {
+						String teamString = matchField.getText();
+						String[] teams = teamString.split(",");
+						ArrayList<String> teamNums = new ArrayList<String>();
+						for (String i : teams){
+							teamNums.add(i);
+						}
 						
-						List<String> teamNums = Tools.getTeamNumbers(matchField.getText());
-								
 						List<RobotNumber> autoNums = new Vector<RobotNumber>();
 						List<RobotNumber> teleNums = new Vector<RobotNumber>();
 						for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
@@ -96,12 +99,6 @@ public class UI extends UIV3 implements ActionListener {
 							teleNums.get(i).setText(teamNums.get(i));
 						}
 						matchField.setText("");
-						System.out.println("Successfully imported: " + teamNums.toString());
-					} catch (FileNotFoundException e) {
-						System.err.println("Invalid match id: " + matchField.getText());
-					} catch (IOException e) {
-						System.err.println("Unable to import team numbers");
-					}
 				}
 			}
 
