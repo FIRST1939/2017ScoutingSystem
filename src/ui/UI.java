@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import buildingBlocks.RobotNumber;
 import buildingBlocks.RobotTabbedPanel;
 import buildingBlocks.UIV3;
 import elements.Robot;
-import elements.Tools;
 import tools.FileUtils;
 
 import java.awt.event.MouseAdapter;
@@ -38,8 +36,22 @@ public class UI extends UIV3 implements ActionListener {
 	ArrayList<ArrayList<String>> fullMatches = new ArrayList<ArrayList<String>>();
 	public int matchCount = 0;
 	public UIV3 ui = new UIV3();
+	String fileName = "";
+	File outputFile = null;
+	
 	
 	public UI() {
+		
+		JMenuItem mntmMakenewfile = new JMenuItem("MakeNewFile");
+		mntmMakenewfile.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent e) {
+				outputFile = getSave();
+				
+			}
+		});
+		MENU_EXPORT.add(mntmMakenewfile);
+		
 		JMenuItem ITEM_NEXT = new JMenuItem("NEXT");
 		MENU_COMPETITION.add(ITEM_NEXT);
 		ITEM_IMPORT_TEAM_NUMBERS.addMouseListener(new MouseAdapter() {
@@ -67,6 +79,14 @@ public class UI extends UIV3 implements ActionListener {
 					teleNums.get(i).setText(teamNums.get(i));
 				}
 				matchCount++;
+				ArrayList<ArrayList<String>> teamList = makeNewCompiledMatch();
+				
+				try {
+					FileUtils.writeNewMatch(outputFile, teamList);
+					System.out.println("Exported: " + teamList);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				resetBoard();
 				} 
 				
@@ -158,10 +178,50 @@ public class UI extends UIV3 implements ActionListener {
 			rp.teleoperated.highGoalAttempts.setText("0");
 			rp.teleoperated.highGoalField.setText("0");
 			rp.teleoperated.climbingAttempts.setText("false");
-			rp.teleoperated.climbingField.setText("false");
+			rp.teleoperated.climbingField.setText("0");
 			
 			
 		}
+	}
+	public File getSave(){
+		File file= null;
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		fc.setDialogType(JFileChooser.SAVE_DIALOG);
+		fc.setCurrentDirectory(defaultSaveFile);
+		fc.setDialogTitle("Set Save Location");
+		int result = fc.showSaveDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			
+		file = fc.getSelectedFile();
+		}
+		return file;
+	}
+	public ArrayList<ArrayList<String>> makeNewCompiledMatch(){
+		ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
+			for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
+				ArrayList<String> teamMatch = new ArrayList<String>();
+				teamMatch.add("" + matchCount);
+				teamMatch.add("" + rp.autonomous.name.getText());
+				teamMatch.add(rp.autonomous.baselineField.getText());
+				teamMatch.add(rp.autonomous.gearField.getText());
+				teamMatch.add(rp.autonomous.gearAttempts.getText());
+				teamMatch.add(rp.autonomous.lowGoalField.getText());
+				teamMatch.add(rp.autonomous.lowGoalAttempts.getText());
+				teamMatch.add(rp.autonomous.highGoalField.getText());
+				teamMatch.add(rp.teleoperated.blocksField.getText());
+				teamMatch.add(rp.teleoperated.gearField.getText());
+				teamMatch.add(rp.teleoperated.gearAttempts.getText());
+				teamMatch.add(rp.teleoperated.lowGoalField.getText());
+				teamMatch.add(rp.teleoperated.lowGoalAttempts.getText());
+				teamMatch.add(rp.teleoperated.highGoalField.getText());
+				teamMatch.add(rp.teleoperated.highGoalAttempts.getText());
+				teamMatch.add(rp.teleoperated.climbingField.getText());
+				teamMatch.add(rp.teleoperated.climbingAttempts.getText());
+				out.add(teamMatch);
+			}
+		return out;
+		
 	}
 	public File getEvent() {
 		JFileChooser chooser = new JFileChooser();
