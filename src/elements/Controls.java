@@ -210,9 +210,9 @@ public class Controls extends ControlScheme {
 					panel.teleoperated.blocksField.setText("" +value);;
 				}
 				if (controller.isXPressed()){
-					boolean value = Boolean.parseBoolean(panel.teleoperated.deadBot.getText());
+					boolean value = Boolean.parseBoolean(panel.teleoperated.deadBotField.getText());
 					value = !value;
-					panel.teleoperated.deadBot.setText("" + value);
+					panel.teleoperated.deadBotField.setText("" + value);
 				}
 				if (controller.isYPressed()){
 					

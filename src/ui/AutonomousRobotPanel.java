@@ -51,6 +51,8 @@ public class AutonomousRobotPanel extends RobotPanel {
 	public ScoreLabel gearLabel;
 	public ScoreLabel baselineLabel;
 	public ScoreLabel totalPointsLabel;
+	public ScoreLabel lblMatch;
+	public ScoreField matchField;
 	
 	
 	/**
@@ -72,7 +74,7 @@ public class AutonomousRobotPanel extends RobotPanel {
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("84px"),
+				ColumnSpec.decode("84px:grow"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,},
 			new RowSpec[] {
 				FormSpecs.RELATED_GAP_ROWSPEC,
@@ -108,6 +110,16 @@ public class AutonomousRobotPanel extends RobotPanel {
 		lowGoalLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lowGoalLabel.setFont(scoreLabelFont);
 		this.add(lowGoalLabel, "2, 6, fill, center");
+		
+		lblMatch = new ScoreLabel("Match");
+		lblMatch.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblMatch, "8, 6, right, default");
+		
+		matchField = new ScoreField();
+		matchField.setEditable(false);
+		matchField.setText("0");
+		add(matchField, "10, 6, fill, default");
+		matchField.setColumns(10);
 		
 		highGoalLabel = new ScoreLabel("High Goal");
 		highGoalLabel.setHorizontalAlignment(SwingConstants.LEFT);

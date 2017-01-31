@@ -43,7 +43,6 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 	public ScoreField highGoalAttempts;
 	public ScoreField gearAttempts;
 	public ScoreField baselineAttempts;
-	public ScoreField deadBot;
 	
 	public RobotNumber name = new RobotNumber();
 	public ScoreLabel lowGoalLabel;
@@ -54,8 +53,10 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 	public ScoreLabel blocksLabel;
 	public ScoreField climbingField;
 	public ScoreLabel climbLabel;
-	private JLabel lblDeadBot;
-	private ScoreField deadBotField;
+	public JLabel DeadBotLabel;
+	public ScoreField deadBotField;
+	public ScoreLabel lblMatch;
+	public ScoreField matchField;
 	
 	/**
 	 * The constructor.
@@ -76,7 +77,7 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("84px"),
+				ColumnSpec.decode("84px:grow"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,},
 			new RowSpec[] {
 				FormSpecs.RELATED_GAP_ROWSPEC,
@@ -111,6 +112,16 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		lowGoalLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lowGoalLabel.setFont(scoreLabelFont);
 		this.add(lowGoalLabel, "2, 6, fill, center");
+		
+		lblMatch = new ScoreLabel("Match");
+		lblMatch.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblMatch, "8, 6, right, default");
+		
+		matchField = new ScoreField();
+		matchField.setText("0");
+		matchField.setEditable(false);
+		add(matchField, "10, 6, fill, default");
+		matchField.setColumns(10);
 		
 		highGoalLabel = new ScoreLabel("High Goal");
 		highGoalLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -200,9 +211,9 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		climbingField.setColumns(10);
 		add(climbingField, "4, 14, fill, default");
 		
-		lblDeadBot = new ScoreLabel("Dead Bot");
-		lblDeadBot.setFont(new Font("Dialog", Font.PLAIN, 15));
-		add(lblDeadBot, "2, 16, left, default");
+		DeadBotLabel = new ScoreLabel("Dead Bot");
+		DeadBotLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
+		add(DeadBotLabel, "2, 16, left, default");
 		
 		deadBotField = new ScoreField();
 		deadBotField.setText("false");

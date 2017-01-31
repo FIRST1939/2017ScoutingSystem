@@ -43,8 +43,6 @@ public class Auto extends RobotPanel {
 	public ScoreField highGoalAttempts;
 	public ScoreField gearAttempts;
 	public ScoreField baselineAttempts;
-	public ScoreField climbingAttempts;
-	public ScoreField deadBot;
 	
 	public RobotNumber name = new RobotNumber();
 	public ScoreLabel lowGoalLabel;
@@ -55,8 +53,10 @@ public class Auto extends RobotPanel {
 	public ScoreLabel blocksLabel;
 	public ScoreField climbingField;
 	public ScoreLabel climbLabel;
-	private JLabel lblDeadBot;
-	private ScoreField deadBotField;
+	public JLabel DeadBotLabel;
+	public ScoreField deadBotField;
+	private JLabel lblMatch;
+	private JTextField matchField;
 	
 	/**
 	 * The constructor.
@@ -77,7 +77,7 @@ public class Auto extends RobotPanel {
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("84px"),
+				ColumnSpec.decode("84px:grow"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,},
 			new RowSpec[] {
 				FormSpecs.RELATED_GAP_ROWSPEC,
@@ -112,6 +112,15 @@ public class Auto extends RobotPanel {
 		lowGoalLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lowGoalLabel.setFont(scoreLabelFont);
 		this.add(lowGoalLabel, "2, 6, fill, center");
+		
+		lblMatch = new JLabel("Match");
+		lblMatch.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblMatch, "8, 6, right, default");
+		
+		matchField = new JTextField();
+		matchField.setText("0");
+		add(matchField, "10, 6, fill, default");
+		matchField.setColumns(10);
 		
 		highGoalLabel = new ScoreLabel("High Goal");
 		highGoalLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -187,14 +196,6 @@ public class Auto extends RobotPanel {
 		this.add(blocksField, "4, 12, fill, fill");
 		blocksField.setColumns(10);
 		
-		climbingAttempts = new ScoreField();
-		climbingAttempts.setHorizontalAlignment(SwingConstants.RIGHT);
-		climbingAttempts.setFont(scoreFieldFont);
-		climbingAttempts.setText("0");
-		climbingAttempts.setEditable(false);
-		this.add(climbingAttempts, "6, 14, fill, fill");
-		climbingAttempts.setColumns(10);
-		
 		climbLabel = new ScoreLabel("Climbing");
 		climbLabel.setText("Climbing");
 		climbLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -209,9 +210,9 @@ public class Auto extends RobotPanel {
 		climbingField.setColumns(10);
 		add(climbingField, "4, 14, fill, default");
 		
-		lblDeadBot = new JLabel("Dead Bot");
-		lblDeadBot.setFont(new Font("Dialog", Font.PLAIN, 15));
-		add(lblDeadBot, "2, 16, right, default");
+		DeadBotLabel = new ScoreLabel("Dead Bot");
+		DeadBotLabel.setFont(new Font("Dialog", Font.PLAIN, 15));
+		add(DeadBotLabel, "2, 16, left, default");
 		
 		deadBotField = new ScoreField();
 		deadBotField.setText("false");

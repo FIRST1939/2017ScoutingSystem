@@ -79,6 +79,10 @@ public class UI extends UIV3 implements ActionListener {
 					teleNums.get(i).setText(teamNums.get(i));
 				}
 				matchCount++;
+				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
+					rp.autonomous.matchField.setText("" + matchCount);
+					rp.teleoperated.matchField.setText("" + matchCount);
+				}
 				ArrayList<ArrayList<String>> teamList = makeNewCompiledMatch();
 				
 				try {
@@ -119,7 +123,7 @@ public class UI extends UIV3 implements ActionListener {
 						for (int i = 0; i < Math.min(teamNums.size(), autoNums.size()); i++) {
 							autoNums.get(i).setText(teamNums.get(i));
 							teleNums.get(i).setText(teamNums.get(i));
-						}
+						}	
 						matchField.setText("");
 				}
 			}
@@ -177,7 +181,7 @@ public class UI extends UIV3 implements ActionListener {
 			rp.teleoperated.lowGoalField.setText("0");
 			rp.teleoperated.highGoalAttempts.setText("0");
 			rp.teleoperated.highGoalField.setText("0");
-			rp.teleoperated.climbingField.setText("0");
+			rp.teleoperated.climbingField.setText("false");
 			
 			
 		}
@@ -208,6 +212,7 @@ public class UI extends UIV3 implements ActionListener {
 				teamMatch.add(rp.autonomous.lowGoalField.getText());
 				teamMatch.add(rp.autonomous.lowGoalAttempts.getText());
 				teamMatch.add(rp.autonomous.highGoalField.getText());
+				teamMatch.add(rp.autonomous.highGoalAttempts.getText());
 				teamMatch.add(rp.teleoperated.blocksField.getText());
 				teamMatch.add(rp.teleoperated.gearField.getText());
 				teamMatch.add(rp.teleoperated.gearAttempts.getText());
@@ -216,7 +221,7 @@ public class UI extends UIV3 implements ActionListener {
 				teamMatch.add(rp.teleoperated.highGoalField.getText());
 				teamMatch.add(rp.teleoperated.highGoalAttempts.getText());
 				teamMatch.add(rp.teleoperated.climbingField.getText());
-				teamMatch.add(rp.teleoperated.deadBot.getText());
+				teamMatch.add(rp.teleoperated.deadBotField.getText());
 				out.add(teamMatch);
 			}
 		return out;
