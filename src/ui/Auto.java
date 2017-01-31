@@ -25,7 +25,7 @@ import buildingBlocks.ScoreLabel;
  * @author Grayson Spidle
  *
  */
-public class TeleoperatedRobotPanel extends RobotPanel {
+public class Auto extends RobotPanel {
 	
 	private static final long serialVersionUID = -8832379680749996395L;
 
@@ -43,6 +43,7 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 	public ScoreField highGoalAttempts;
 	public ScoreField gearAttempts;
 	public ScoreField baselineAttempts;
+	public ScoreField climbingAttempts;
 	public ScoreField deadBot;
 	
 	public RobotNumber name = new RobotNumber();
@@ -62,7 +63,7 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 	 * @param robotNumber The team number.
 	 * @param teamColor The team color.
 	 */
-	public TeleoperatedRobotPanel(String robotNumber, Color teamColor) {
+	public Auto(String robotNumber, Color teamColor) {
 		super();
 		this.setBorder(new LineBorder(new Color(0, 0, 0)));
 		this.setBackground(teamColor);
@@ -186,6 +187,14 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		this.add(blocksField, "4, 12, fill, fill");
 		blocksField.setColumns(10);
 		
+		climbingAttempts = new ScoreField();
+		climbingAttempts.setHorizontalAlignment(SwingConstants.RIGHT);
+		climbingAttempts.setFont(scoreFieldFont);
+		climbingAttempts.setText("0");
+		climbingAttempts.setEditable(false);
+		this.add(climbingAttempts, "6, 14, fill, fill");
+		climbingAttempts.setColumns(10);
+		
 		climbLabel = new ScoreLabel("Climbing");
 		climbLabel.setText("Climbing");
 		climbLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -200,9 +209,9 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		climbingField.setColumns(10);
 		add(climbingField, "4, 14, fill, default");
 		
-		lblDeadBot = new ScoreLabel("Dead Bot");
+		lblDeadBot = new JLabel("Dead Bot");
 		lblDeadBot.setFont(new Font("Dialog", Font.PLAIN, 15));
-		add(lblDeadBot, "2, 16, left, default");
+		add(lblDeadBot, "2, 16, right, default");
 		
 		deadBotField = new ScoreField();
 		deadBotField.setText("false");
