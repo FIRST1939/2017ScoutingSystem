@@ -107,8 +107,6 @@ public class UI extends UIV3 implements ActionListener {
 
 			@Override
 			public void keyTyped(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			

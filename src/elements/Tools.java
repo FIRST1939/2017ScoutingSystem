@@ -1,24 +1,19 @@
 package elements;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Vector;
 
+import com.adithyasairam.tba4j.models.Event;
+import com.adithyasairam.tba4j.models.Event.Alliance;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-
-import com.adithyasairam.tba4j.models.Event;
-import com.adithyasairam.tba4j.models.Match;
 
 public class Tools {
 	
@@ -32,6 +27,46 @@ public class Tools {
 	static int counter = -1;
 	
 	private final static String FILE_SEPARATOR = System.getProperty("file.separator");
+	
+	public static List<List<String>> getEventTeamNumbers(String eventId) throws IOException {
+		List<List<String>> output = new Vector<List<String>>();
+		try {
+			JsonReader reader = createEventJsonReader(eventId);
+			reader.beginArray();
+			while (reader.hasNext()) {
+				if (reader.peek().equals(JsonToken.BEGIN_OBJECT)) {
+					EventParser parser = new EventParser(reader);
+					Event event = parser.read();
+					List<String> temp = new Vector<String>();
+					for (Alliance a : event.alliances) {
+						temp = new Vector<String>();
+						StringBuilder b = new StringBuilder();
+						for (String s : a.picks) {
+							b.append(s);
+						}
+						temp.add(b.toString());
+					}
+					output.add(temp);
+					
+				}
+				else {
+					reader.skipValue();
+				}
+			}
+			reader.endArray();
+			
+		} catch (MalformedURLException e) {
+			System.err.println("Cannot create the url");
+		} catch (UnknownHostException e) {
+			System.err.println("Cannot connect to www.thebluealliance.com");
+		} catch (IOException e) {
+			throw e;
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return output;
+	}
 	
 	public static List<String> getTeamNumbers(String matchId) throws IOException {
 		List<String> nums = null;
@@ -83,22 +118,27 @@ public class Tools {
 		return null;
 	}
 	
-	private static String getMatchId(JsonReader reader) throws IOException {
-		String output = "";
-		reader.beginObject();
-		while (reader.hasNext()) {
-			String name = reader.nextName();
-			if (name.equals("key")) {
-				output = reader.nextString();
-			}
-			else {
-				reader.skipValue();
-			}
+	
+	private static JsonReader createEventJsonReader(String eventId) throws IOException {
+		try {
+			URL url = new URL(EVENT_URL_BASE + eventId + "/matches" + URL_END);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows 10; WOW64; rv:25.0) Gecko/20100101 Chrome/51.0.2704.103");
+			connection.connect();
+			JsonReader reader = new JsonReader(new BufferedReader(new InputStreamReader(connection.getInputStream())));
+			
+			return reader;			
+		} catch (MalformedURLException e) {
+			System.err.println("Cannot create the url");
+		} catch (UnknownHostException e) {
+			System.err.println("Cannot connect to www.thebluealliance.com");
+		} catch (IOException e) {
+			throw e;
 		}
-		reader.endObject();
-		
-		return output;
+		return null;
 	}
+	
 	
 	private static List<String> readTeamNumbers(JsonReader reader) throws IOException {
 		List<String> output = new Vector<String>();
@@ -162,17 +202,6 @@ public class Tools {
 		}
 		reader.endArray();
 		return output;
-	}
-	
-	private static Path createNewJsonFile() {
-		try {
-			counter++;
-			return Files.createTempFile("temp" + counter, ".json");
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
 }
