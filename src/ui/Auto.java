@@ -25,7 +25,7 @@ import buildingBlocks.ScoreLabel;
  * @author Grayson Spidle
  *
  */
-public class TeleoperatedRobotPanel extends RobotPanel {
+public class Auto extends RobotPanel {
 	
 	private static final long serialVersionUID = -8832379680749996395L;
 
@@ -55,15 +55,15 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 	public ScoreLabel climbLabel;
 	public JLabel DeadBotLabel;
 	public ScoreField deadBotField;
-	public ScoreLabel lblMatch;
-	public ScoreField matchField;
+	private JLabel lblMatch;
+	private JTextField matchField;
 	
 	/**
 	 * The constructor.
 	 * @param robotNumber The team number.
 	 * @param teamColor The team color.
 	 */
-	public TeleoperatedRobotPanel(String robotNumber, Color teamColor) {
+	public Auto(String robotNumber, Color teamColor) {
 		super();
 		this.setBorder(new LineBorder(new Color(0, 0, 0)));
 		this.setBackground(teamColor);
@@ -113,13 +113,12 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		lowGoalLabel.setFont(scoreLabelFont);
 		this.add(lowGoalLabel, "2, 6, fill, center");
 		
-		lblMatch = new ScoreLabel("Match");
+		lblMatch = new JLabel("Match");
 		lblMatch.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblMatch, "8, 6, right, default");
 		
-		matchField = new ScoreField();
+		matchField = new JTextField();
 		matchField.setText("0");
-		matchField.setEditable(false);
 		add(matchField, "10, 6, fill, default");
 		matchField.setColumns(10);
 		

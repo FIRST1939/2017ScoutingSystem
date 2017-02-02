@@ -209,30 +209,19 @@ public class Controls extends ControlScheme {
 					}
 					panel.teleoperated.blocksField.setText("" +value);;
 				}
-				
+				if (controller.isXPressed()){
+					boolean value = Boolean.parseBoolean(panel.teleoperated.deadBotField.getText());
+					value = !value;
+					panel.teleoperated.deadBotField.setText("" + value);
+				}
 				if (controller.isYPressed()){
-					if (controller.isLTHeld()) {
-						int value = Integer.parseInt(panel.teleoperated.climbingAttempts.getText());
-						if(controller.isLSHeld()){
-							value--;
-						}
-						else{
-							value++;
-						}
-						panel.teleoperated.climbingAttempts.setText("" +value);
-					}
-					else {
+					
 						boolean value = Boolean.parseBoolean(panel.teleoperated.climbingField.getText());
-						if(controller.isLSHeld()){
-							value = !value;
-						}
-						else{
-							value = !value;
-						}
+						value = !value;
 						panel.teleoperated.climbingField.setText("" +value);
 					}
 					
-				}
+				
 				
 				// Switches between autonomous and teleoperated and their respective control schemes
 				if (controller.isStartPressed()) { 
