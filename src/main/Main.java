@@ -2,7 +2,7 @@ package main;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.File;
+import java.util.List;
 import java.util.Vector;
 
 import buildingBlocks.controllerElements.GamepadController;
@@ -10,6 +10,7 @@ import buildingBlocks.controllerElements.StickController;
 import elements.Controls;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
+import net.java.games.input.Rumbler;
 import ui.UI;
 
 /**
@@ -22,8 +23,9 @@ import ui.UI;
 public class Main {
 
 	private static UI ui;
-	private static Vector<StickController> stickControllers = new Vector<StickController>();
-	private static Vector<GamepadController> gamepadControllers = new Vector<GamepadController>();
+	private static List<Controller> controllers = new Vector<Controller>();
+	private static List<StickController> stickControllers = new Vector<StickController>();
+	private static List<GamepadController> gamepadControllers = new Vector<GamepadController>();
 	private static Controls controls;
 
 	private static boolean closeRequested = false;
@@ -79,7 +81,7 @@ public class Main {
 		}
 		// *** END OF MAIN LOOP ***
 	}
-
+	
 	/**
 	 * Discovers connected controllers, then handles the resulting errors, then
 	 * adds an instance of ControlScheme to every controller.
@@ -90,22 +92,28 @@ public class Main {
 
 		for (Controller c : getAllControllersOfType(Controller.Type.GAMEPAD)) {
 			gamepadControllers.add(new GamepadController(c, i));
+			for (Rumbler r : c.getRumblers()) {
+				r.rumble(0.5f);
+			}
 			i++;
 		}
 
 		for (Controller c : getAllControllersOfType(Controller.Type.STICK)) {
 			stickControllers.add(new StickController(c, i));
+			for (Rumbler r : c.getRumblers()) {
+				r.rumble(0.5f);
+			}
 			i++;
 		}
 
-		System.out.println(gamepadControllers.size() + stickControllers.size() + "/6 controllers are connected.");
+		System.out.println(controllers.size() + "/6 controllers are connected.");
 		System.out.println(gamepadControllers.size() + " are Gamepad Controllers.");
 		System.out.println(stickControllers.size() + " are Stick Controllers.");
 
 		// *** ERROR HANDLING ***
 		if (i < 5) {
 			System.err.println("Panels " + (i + 1) + "-6 are not being controlled.");
-		} else if (i >= 6) {
+		} else if (i > 6) {
 			System.err.println("Too many controllers are connected.");
 		}
 		// *** END OF ERROR HANDLING ***
@@ -118,7 +126,6 @@ public class Main {
 		for (StickController ct : stickControllers) {
 			ct.setActionListener(controls.autonomous);
 		}
-		//
 	}
 	
 	/**
@@ -126,7 +133,7 @@ public class Main {
 	 * @param controllerType The specified Controller.Type
 	 * @return Returns a Vector
 	 */
-	private static Vector<Controller> getAllControllersOfType(Controller.Type controllerType) {
+	private static List<Controller> getAllControllersOfType(Controller.Type controllerType) {
 
 		Vector<Controller> output = new Vector<Controller>();
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
@@ -144,7 +151,7 @@ public class Main {
 	 * @return Returns a Vector
 	 */
 	@SuppressWarnings("unused")
-	private static Vector<Controller> getAllConnectedControllers() {
+	private static List<Controller> getAllConnectedControllers() {
 		Vector<Controller> output = new Vector<Controller>();
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 		for (Controller c : controllers) {
