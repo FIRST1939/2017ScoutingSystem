@@ -180,6 +180,7 @@ public class UI extends UIV3 implements ActionListener {
 			rp.teleoperated.highGoalAttempts.setText("0");
 			rp.teleoperated.highGoalField.setText("0");
 			rp.teleoperated.climbingField.setText("false");
+			rp.teleoperated.climbingAttemptsField.setText("false");
 			
 			
 		}
@@ -219,6 +220,7 @@ public class UI extends UIV3 implements ActionListener {
 				teamMatch.add(rp.teleoperated.highGoalField.getText());
 				teamMatch.add(rp.teleoperated.highGoalAttempts.getText());
 				teamMatch.add(rp.teleoperated.climbingField.getText());
+				teamMatch.add(rp.teleoperated.climbingAttemptsField.getText());
 				teamMatch.add(rp.teleoperated.deadBotField.getText());
 				out.add(teamMatch);
 			}

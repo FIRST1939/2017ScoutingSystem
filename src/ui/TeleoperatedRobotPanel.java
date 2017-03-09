@@ -53,8 +53,9 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 	public ScoreLabel blocksLabel;
 	public ScoreField climbingField;
 	public ScoreLabel climbLabel;
-	public JLabel DeadBotLabel;
+	public ScoreLabel DeadBotLabel;
 	public ScoreField deadBotField;
+	public ScoreField climbingAttemptsField;
 	public ScoreLabel lblMatch;
 	public ScoreField matchField;
 	
@@ -73,7 +74,7 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("84px:grow"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("84px"),
+				ColumnSpec.decode("84px:grow"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("84px"),
 				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
@@ -222,6 +223,15 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 		deadBotField.setEditable(false);
 		deadBotField.setColumns(10);
 		add(deadBotField, "4, 16, fill, top");
+		
+		climbingAttemptsField = new ScoreField();
+		climbingAttemptsField.setText("false");
+		climbingAttemptsField.setHorizontalAlignment(SwingConstants.RIGHT);
+		climbingAttemptsField.setFont(new Font("Dialog", Font.PLAIN, 15));
+		climbingAttemptsField.setEditable(false);
+		climbingAttemptsField.setColumns(10);
+		add(climbingAttemptsField, "6, 16, fill, default");
+		
 		
 	}
 }
