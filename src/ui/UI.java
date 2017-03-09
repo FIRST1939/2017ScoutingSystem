@@ -3,9 +3,12 @@ package ui;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,18 +16,16 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import buildingBlocks.RobotNumber;
 import buildingBlocks.RobotTabbedPanel;
+import buildingBlocks.ScoreField;
 import buildingBlocks.UIV3;
 import elements.Robot;
 import tools.FileUtils;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
 
 public class UI extends UIV3 implements ActionListener {
 	
@@ -38,6 +39,8 @@ public class UI extends UIV3 implements ActionListener {
 	public UIV3 ui = new UIV3();
 	String fileName = "";
 	File outputFile = null;
+	
+	private final JMenuItem ITEM_RESET = new JMenuItem("Reset Fields");
 	
 	
 	public UI() {
@@ -93,10 +96,17 @@ public class UI extends UIV3 implements ActionListener {
 				}
 				resetBoard();
 				} 
-				
-
-
 		});
+		
+		ITEM_RESET.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				resetBoard();
+			}
+		});
+		MENU_DEBUG.add(ITEM_RESET);
+		
 		matchField = new JTextField();
 		matchField.addKeyListener(new KeyListener() {
 			@Override
@@ -163,25 +173,22 @@ public class UI extends UIV3 implements ActionListener {
 	}
 	public void resetBoard(){
 		for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
-			//Auto Clears
-			rp.autonomous.baselineField.setText("false");
-			rp.autonomous.gearField.setText("0");
-			rp.autonomous.gearAttempts.setText("0");
-			rp.autonomous.lowGoalField.setText("0");
-			rp.autonomous.lowGoalAttempts.setText("0");
-			rp.autonomous.highGoalField.setText("0");
-			rp.autonomous.highGoalAttempts.setText("0");
-			//Tele clears
-			rp.teleoperated.blocksField.setText("0");
-			rp.teleoperated.gearField.setText("0");
-			rp.teleoperated.gearAttempts.setText("0");
-			rp.teleoperated.lowGoalAttempts.setText("0");
-			rp.teleoperated.lowGoalField.setText("0");
-			rp.teleoperated.highGoalAttempts.setText("0");
-			rp.teleoperated.highGoalField.setText("0");
-			rp.teleoperated.climbingField.setText("false");
 			
+			for (ScoreField f : rp.autonomous.fields) {
+				if (f.getText().equals("true") || f.getText().equals("false")) {
+					f.setText("false");
+				} else {
+					f.setText("0");
+				}
+			}
 			
+			for (ScoreField f : rp.teleoperated.fields) {
+				if (f.getText().equals("true") || f.getText().equals("false")) {
+					f.setText("false");
+				} else {
+					f.setText("0");
+				}
+			}
 		}
 	}
 	public File getSave(){

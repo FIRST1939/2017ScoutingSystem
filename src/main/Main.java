@@ -23,7 +23,6 @@ import ui.UI;
 public class Main {
 
 	private static UI ui;
-	private static List<Controller> controllers = new Vector<Controller>();
 	private static List<StickController> stickControllers = new Vector<StickController>();
 	private static List<GamepadController> gamepadControllers = new Vector<GamepadController>();
 	private static Controls controls;
@@ -106,7 +105,7 @@ public class Main {
 			i++;
 		}
 
-		System.out.println(controllers.size() + "/6 controllers are connected.");
+		System.out.println(gamepadControllers.size() + stickControllers.size() + "/6 controllers are connected.");
 		System.out.println(gamepadControllers.size() + " are Gamepad Controllers.");
 		System.out.println(stickControllers.size() + " are Stick Controllers.");
 
