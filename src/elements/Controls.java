@@ -202,11 +202,28 @@ public class Controls extends ControlScheme {
 					value = !value;
 					panel.teleoperated.deadBotField.setText("" + value);
 				}
+<<<<<<< HEAD
 				if (controller.isYPressed()) {
 					boolean value = Boolean.parseBoolean(panel.teleoperated.climbingField.getText());
 					value = !value;
 					panel.teleoperated.climbingField.setText("" + value);
 				}
+=======
+				if (controller.isYPressed()){
+					if (controller.isLTHeld()){
+						boolean value = Boolean.parseBoolean(panel.teleoperated.climbingAttemptsField.getText());
+						panel.teleoperated.climbingAttemptsField.setText("" +value);
+					}
+						boolean value = Boolean.parseBoolean(panel.teleoperated.climbingAttemptsField.getText());
+						value = !value;
+						panel.teleoperated.climbingAttemptsField.setText("" +value);
+						boolean value1 = Boolean.parseBoolean(panel.teleoperated.climbingField.getText());
+						value1 = !value1;
+						panel.teleoperated.climbingField.setText("" +value1);
+					}
+					
+				
+>>>>>>> origin/master
 				
 				if (controller.isBackPressed()) {
 					controller.rumble(0.5f);

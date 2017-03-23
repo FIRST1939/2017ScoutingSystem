@@ -173,6 +173,27 @@ public class UI extends UIV3 implements ActionListener {
 	}
 	public void resetBoard(){
 		for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
+<<<<<<< HEAD
+=======
+			//Auto Clears
+			rp.autonomous.baselineField.setText("false");
+			rp.autonomous.gearField.setText("0");
+			rp.autonomous.gearAttempts.setText("0");
+			rp.autonomous.lowGoalField.setText("0");
+			rp.autonomous.lowGoalAttempts.setText("0");
+			rp.autonomous.highGoalField.setText("0");
+			rp.autonomous.highGoalAttempts.setText("0");
+			//Tele clears
+			rp.teleoperated.blocksField.setText("0");
+			rp.teleoperated.gearField.setText("0");
+			rp.teleoperated.gearAttempts.setText("0");
+			rp.teleoperated.lowGoalAttempts.setText("0");
+			rp.teleoperated.lowGoalField.setText("0");
+			rp.teleoperated.highGoalAttempts.setText("0");
+			rp.teleoperated.highGoalField.setText("0");
+			rp.teleoperated.climbingField.setText("false");
+			rp.teleoperated.climbingAttemptsField.setText("false");
+>>>>>>> origin/master
 			
 			for (ScoreField f : rp.autonomous.fields) {
 				if (f.getText().equals("true") || f.getText().equals("false")) {
@@ -226,6 +247,7 @@ public class UI extends UIV3 implements ActionListener {
 				teamMatch.add(rp.teleoperated.highGoalField.getText());
 				teamMatch.add(rp.teleoperated.highGoalAttempts.getText());
 				teamMatch.add(rp.teleoperated.climbingField.getText());
+				teamMatch.add(rp.teleoperated.climbingAttemptsField.getText());
 				teamMatch.add(rp.teleoperated.deadBotField.getText());
 				out.add(teamMatch);
 			}
