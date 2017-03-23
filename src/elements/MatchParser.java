@@ -24,16 +24,20 @@ public class MatchParser extends Parser<Match> {
 			String name = reader.nextName();
 			if (name.equals("comp_level")) {
 				output.comp_level = reader.nextString();
-			}
-			
-			else if (name.equals("key")) {
+			} else if (name.equals("match_number")) {
+				output.match_number = reader.nextInt();
+			} else if (name.equals("set_number")) {
+				output.set_number = reader.nextInt();
+			} else if (name.equals("key")) {
 				output.key = reader.nextString();
 			}
 			else if (name.equals("time")) {
 				output.time = reader.nextInt();
 			}
 			else if (name.equals("alliances")) {
-				output.alliances = (Alliance[]) readAlliances(reader).toArray();
+				List<Alliance> arr = readAlliances(reader);
+				output.alliances = new Match.Alliance[arr.size()];
+				output.alliances = arr.toArray(output.alliances);
 			}
 			else {
 				reader.skipValue();
@@ -44,18 +48,18 @@ public class MatchParser extends Parser<Match> {
 	}
 	
 	
-	private List<Alliance> readAlliances(JsonReader reader) throws IOException {
-		List<Alliance> output = new Vector<Alliance>();
-		reader.beginArray();
+	private Vector<Alliance> readAlliances(JsonReader reader) throws IOException {
+		Vector<Alliance> output = new Vector<Alliance>();
+		reader.beginObject();
 		while (reader.hasNext()) {
-			if (reader.peek().equals(JsonToken.BEGIN_OBJECT)) {
+			String name = reader.nextName();
+			if (name.equals("blue") || name.equals("red")) {
 				output.add(readAlliance(reader));
-			}
-			else {
+			} else {
 				reader.skipValue();
 			}
 		}
-		reader.endArray();
+		reader.endObject();
 		return output;
 	}
 
@@ -64,11 +68,10 @@ public class MatchParser extends Parser<Match> {
 		reader.beginObject();
 		while (reader.hasNext()) {
 			String name = reader.nextName();
-			if (name.equals("blue")) {
-				output.teams[0] = readStringArray(reader).toString().replaceAll("[", "").replaceAll("]", "");
-			}
-			else if (name.equals("red")) {
-				output.teams[1] = readStringArray(reader).toString().replaceAll("[", "").replaceAll("]", "");
+			if (name.equals("teams")) {
+				List<String> arr = readStringArray(reader);
+				output.teams = new String[arr.size()];
+				output.teams = arr.toArray(output.teams);
 			}
 			else {
 				reader.skipValue();
@@ -78,8 +81,8 @@ public class MatchParser extends Parser<Match> {
 		return output;
 	}
 	
-	private List<String> readStringArray(JsonReader reader) throws IOException {
-		List<String> output = new Vector<String>();
+	private Vector<String> readStringArray(JsonReader reader) throws IOException {
+		Vector<String> output = new Vector<String>();
 		reader.beginArray();
 		while (reader.hasNext()) {
 			if (reader.peek().equals(JsonToken.STRING)) {

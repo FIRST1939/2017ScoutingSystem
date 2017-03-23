@@ -1,16 +1,21 @@
 package main;
 
+import static net.java.games.input.Controller.Type.GAMEPAD;
+import static net.java.games.input.Controller.Type.STICK;
+
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import buildingBlocks.controllerElements.GamepadController;
+import buildingBlocks.controllerElements.JController;
 import buildingBlocks.controllerElements.StickController;
 import elements.Controls;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
-import net.java.games.input.Rumbler;
 import ui.UI;
 
 /**
@@ -23,8 +28,7 @@ import ui.UI;
 public class Main {
 
 	private static UI ui;
-	private static List<StickController> stickControllers = new Vector<StickController>();
-	private static List<GamepadController> gamepadControllers = new Vector<GamepadController>();
+	private static Map<Integer, JController> controllers = new HashMap<Integer, JController>();
 	private static Controls controls;
 
 	private static boolean closeRequested = false;
@@ -34,9 +38,7 @@ public class Main {
 	 * @param ui The UI for the program to show and modify.
 	 */
 	public static void main(String[] args) {
-		
 		ui = new UI();
-		System.setErr(System.err);
 		controls = new Controls(ui);
 		
 		ui.addWindowListener(new WindowListener() {
@@ -49,9 +51,7 @@ public class Main {
 
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-//				closeRequested = true;
-//				ui.CONSOLE.out.close();
-//				ui.CONSOLE.err.close();
+				closeRequested = true;
 			}
 
 			@Override
@@ -68,14 +68,17 @@ public class Main {
 		});
 		
 		prepareControllers();
-
+		
 		// *** MAIN LOOP ***
 		while (!closeRequested) {
-			for (GamepadController ct : gamepadControllers) {
+			for (JController ct : controllers.values()) {
 				ct.pollControllerInput();
 			}
-			for (StickController ct : stickControllers) {
-				ct.pollControllerInput();
+			System.gc();
+			try {
+				Thread.sleep(16,500000); // Limiting refresh rate to about 30 refreshes per second
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 		// *** END OF MAIN LOOP ***
@@ -89,42 +92,37 @@ public class Main {
 
 		int i = 0;
 
-		for (Controller c : getAllControllersOfType(Controller.Type.GAMEPAD)) {
-			gamepadControllers.add(new GamepadController(c, i));
-			for (Rumbler r : c.getRumblers()) {
-				r.rumble(0.5f);
-			}
+		for (Controller c : getAllControllersOfType(GAMEPAD)) {
+			controllers.put(i, new GamepadController(c, i));
 			i++;
 		}
 
-		for (Controller c : getAllControllersOfType(Controller.Type.STICK)) {
-			stickControllers.add(new StickController(c, i));
-			for (Rumbler r : c.getRumblers()) {
-				r.rumble(0.5f);
-			}
+		for (Controller c : getAllControllersOfType(STICK)) {
+			controllers.put(i, new StickController(c, i));
 			i++;
 		}
 
-		System.out.println(gamepadControllers.size() + stickControllers.size() + "/6 controllers are connected.");
-		System.out.println(gamepadControllers.size() + " are Gamepad Controllers.");
-		System.out.println(stickControllers.size() + " are Stick Controllers.");
+		System.out.println(controllers.size() + "/6 controllers connected.");
 
 		// *** ERROR HANDLING ***
 		if (i < 5) {
 			System.err.println("Panels " + (i + 1) + "-6 are not being controlled.");
 		} else if (i > 6) {
-			System.err.println("Too many controllers are connected.");
+			for (Map.Entry<Integer, JController> e : controllers.entrySet()) {
+				if (e.getKey() >= 6) {
+					controllers.remove(e.getKey());
+				}
+			}
 		}
 		// *** END OF ERROR HANDLING ***
 		
-
-		// Adding the ControlScheme to every controller
-		for (GamepadController ct : gamepadControllers) {
-			ct.setActionListener(controls.autonomous);
+		for (JController ct : controllers.values()) {
+			prepareController(ct);
 		}
-		for (StickController ct : stickControllers) {
-			ct.setActionListener(controls.autonomous);
-		}
+	}
+	
+	private static void prepareController(JController arg0) {
+		arg0.addActionListener(controls.autonomous);
 	}
 	
 	/**
@@ -133,7 +131,6 @@ public class Main {
 	 * @return Returns a Vector
 	 */
 	private static List<Controller> getAllControllersOfType(Controller.Type controllerType) {
-
 		Vector<Controller> output = new Vector<Controller>();
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 		for (Controller c : controllers) {
@@ -142,7 +139,6 @@ public class Main {
 			}
 		}
 		return output;
-
 	}
 
 	/**
@@ -150,7 +146,7 @@ public class Main {
 	 * @return Returns a Vector
 	 */
 	@SuppressWarnings("unused")
-	private static List<Controller> getAllConnectedControllers() {
+	private static List<Controller> getAllConnectedDevices() {
 		Vector<Controller> output = new Vector<Controller>();
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 		for (Controller c : controllers) {
@@ -158,4 +154,5 @@ public class Main {
 		}
 		return output;
 	}
+
 }

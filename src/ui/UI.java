@@ -27,45 +27,40 @@ import buildingBlocks.UIV3;
 import elements.Robot;
 import tools.FileUtils;
 
-public class UI extends UIV3 implements ActionListener {
+public class UI extends UIV3<RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel>> implements ActionListener {
 	
-	/**
-	 * 
-	 */
-	
+	private static final long serialVersionUID = -386663189657345404L;
 	public JTextField matchField;
-	ArrayList<ArrayList<String>> fullMatches = new ArrayList<ArrayList<String>>();
+	private ArrayList<ArrayList<String>> fullMatches = new ArrayList<ArrayList<String>>();
 	public int matchCount = 0;
-	public UIV3 ui = new UIV3();
-	String fileName = "";
-	File outputFile = null;
+	private File outputFile = null;
 	
+	private final JMenuItem ITEM_SET_OUTPUT_FILE = new JMenuItem("Set Output File");
 	private final JMenuItem ITEM_RESET = new JMenuItem("Reset Fields");
+	private final JMenuItem ITEM_NEXT = new JMenuItem("NEXT");
 	
 	
 	public UI() {
 		
-		JMenuItem mntmMakenewfile = new JMenuItem("MakeNewFile");
-		mntmMakenewfile.addMouseListener(new MouseAdapter() {
+		ITEM_SET_OUTPUT_FILE.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent e) {
-				outputFile = getSave();
-				
+				getSave();
 			}
 		});
-		MENU_EXPORT.add(mntmMakenewfile);
+		MENU_EXPORT.add(ITEM_SET_OUTPUT_FILE);
 		
-		JMenuItem ITEM_NEXT = new JMenuItem("NEXT");
-		MENU_COMPETITION.add(ITEM_NEXT);
+		
 		ITEM_IMPORT_TEAM_NUMBERS.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				fullMatches = ui.makeFullArray();
-				ui.setMatchReset(matchCount);
+				fullMatches = makeFullArray();
+				setMatchReset(matchCount);
 				
 			}
 			
 		});
+		
 		ITEM_NEXT.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -73,7 +68,7 @@ public class UI extends UIV3 implements ActionListener {
 				ArrayList<String> teamNums =fullMatches.get(matchCount);
 				List<RobotNumber> autoNums = new Vector<RobotNumber>();
 				List<RobotNumber> teleNums = new Vector<RobotNumber>();
-				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
+				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : panels) {
 					autoNums.add(rp.autonomous.name);
 					teleNums.add(rp.teleoperated.name);
 				}
@@ -95,8 +90,9 @@ public class UI extends UIV3 implements ActionListener {
 					e.printStackTrace();
 				}
 				resetBoard();
-				} 
+			} 
 		});
+		MENU_COMPETITION.add(ITEM_NEXT);
 		
 		ITEM_RESET.addActionListener(new ActionListener() {
 
@@ -105,6 +101,7 @@ public class UI extends UIV3 implements ActionListener {
 				resetBoard();
 			}
 		});
+		
 		MENU_DEBUG.add(ITEM_RESET);
 		
 		matchField = new JTextField();
@@ -112,7 +109,6 @@ public class UI extends UIV3 implements ActionListener {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 			}
-
 		
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -167,12 +163,9 @@ public class UI extends UIV3 implements ActionListener {
 		
 		this.setVisible(true);
 		this.setTitle("FRC SteamWorks - Scouting Program");
-		
-		
-		
 	}
 	public void resetBoard(){
-		for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
+		for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : panels){
 			
 			for (ScoreField f : rp.autonomous.fields) {
 				if (f.getText().equals("true") || f.getText().equals("false")) {
@@ -191,8 +184,7 @@ public class UI extends UIV3 implements ActionListener {
 			}
 		}
 	}
-	public File getSave(){
-		File file= null;
+	public void getSave(){
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		fc.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -200,33 +192,19 @@ public class UI extends UIV3 implements ActionListener {
 		fc.setDialogTitle("Set Save Location");
 		int result = fc.showSaveDialog(this);
 		if (result == JFileChooser.APPROVE_OPTION) {
-			
-		file = fc.getSelectedFile();
+			outputFile = fc.getSelectedFile();
 		}
-		return file;
 	}
 	public ArrayList<ArrayList<String>> makeNewCompiledMatch(){
 		ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
-			for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
+			for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : panels){
 				ArrayList<String> teamMatch = new ArrayList<String>();
-				teamMatch.add("" + matchCount);
-				teamMatch.add("" + rp.autonomous.name.getText());
-				teamMatch.add(rp.autonomous.baselineField.getText());
-				teamMatch.add(rp.autonomous.gearField.getText());
-				teamMatch.add(rp.autonomous.gearAttempts.getText());
-				teamMatch.add(rp.autonomous.lowGoalField.getText());
-				teamMatch.add(rp.autonomous.lowGoalAttempts.getText());
-				teamMatch.add(rp.autonomous.highGoalField.getText());
-				teamMatch.add(rp.autonomous.highGoalAttempts.getText());
-				teamMatch.add(rp.teleoperated.blocksField.getText());
-				teamMatch.add(rp.teleoperated.gearField.getText());
-				teamMatch.add(rp.teleoperated.gearAttempts.getText());
-				teamMatch.add(rp.teleoperated.lowGoalField.getText());
-				teamMatch.add(rp.teleoperated.lowGoalAttempts.getText());
-				teamMatch.add(rp.teleoperated.highGoalField.getText());
-				teamMatch.add(rp.teleoperated.highGoalAttempts.getText());
-				teamMatch.add(rp.teleoperated.climbingField.getText());
-				teamMatch.add(rp.teleoperated.deadBotField.getText());
+				for (ScoreField field : rp.autonomous.fields) {
+					teamMatch.add(field.getText());
+				}
+				for (ScoreField field : rp.teleoperated.fields) {
+					teamMatch.add(field.getText());
+				}
 				out.add(teamMatch);
 			}
 		return out;

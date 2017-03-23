@@ -15,7 +15,7 @@ import ui.UI;
  */
 public class Controls extends ControlScheme {
 
-	private final long DELAY = 10; // Milliseconds
+	private final long DELAY = 0; // Milliseconds default:"10"
 
 	/**
 	 * The constructor. Creates 2 ActionListeners for the user to use.
@@ -29,7 +29,7 @@ public class Controls extends ControlScheme {
 		setAutonomousActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public synchronized void actionPerformed(ActionEvent e) {
 				JController controller = (JController) e.getSource();
 				Robot panel = (Robot) ui.getRobotTabbedPanel(controller.robotPanelNumber);
 				if (controller.isLBPressed()) {
@@ -104,7 +104,8 @@ public class Controls extends ControlScheme {
 				// respective control schemes
 				if (controller.isStartPressed()) {
 					panel.setSelectedIndex(1);
-					controller.setActionListener(teleoperated);
+					controller.removeActionListener(autonomous);
+					controller.addActionListener(teleoperated);
 				}
 
 				if (controller.isBackPressed()) {
@@ -125,7 +126,7 @@ public class Controls extends ControlScheme {
 		setTeleoperatedActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public synchronized void actionPerformed(ActionEvent e) {
 				JController controller = (JController) e.getSource();
 				Robot panel = (Robot) ui.getRobotTabbedPanel(controller.robotPanelNumber);
 
@@ -216,7 +217,8 @@ public class Controls extends ControlScheme {
 				// respective control schemes
 				if (controller.isStartPressed()) {
 					panel.setSelectedIndex(0);
-					controller.setActionListener(autonomous);
+					controller.removeActionListener(teleoperated);
+					controller.addActionListener(autonomous);
 				}
 
 				// Suspends the thread for DELAY amount of miliseconds
