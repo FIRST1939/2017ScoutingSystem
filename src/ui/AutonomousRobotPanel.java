@@ -2,11 +2,7 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Vector;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
@@ -19,8 +15,6 @@ import buildingBlocks.RobotNumber;
 import buildingBlocks.RobotPanel;
 import buildingBlocks.ScoreField;
 import buildingBlocks.ScoreLabel;
-import buildingBlocks.ValueChangeEvent;
-import buildingBlocks.ValueChangeListener;
 
 /**
  * This class governs all the teleoperated interface and data.
@@ -192,7 +186,5 @@ public class AutonomousRobotPanel extends RobotPanel {
 		baselineField.setFont(scoreFieldFont);
 		this.add(baselineField, "4, 12, fill, fill");
 		baselineField.setColumns(10);
-		
-		
 	}
 }

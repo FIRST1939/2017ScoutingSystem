@@ -27,7 +27,7 @@ import buildingBlocks.UIV3;
 import elements.Robot;
 import tools.FileUtils;
 
-public class UI extends UIV3 implements ActionListener {
+public class UI extends UIV3<RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel>> implements ActionListener {
 	
 	/**
 	 * 
@@ -36,7 +36,6 @@ public class UI extends UIV3 implements ActionListener {
 	public JTextField matchField;
 	ArrayList<ArrayList<String>> fullMatches = new ArrayList<ArrayList<String>>();
 	public int matchCount = 0;
-	public UIV3 ui = new UIV3();
 	String fileName = "";
 	File outputFile = null;
 	
@@ -45,7 +44,7 @@ public class UI extends UIV3 implements ActionListener {
 	
 	public UI() {
 		
-		JMenuItem mntmMakenewfile = new JMenuItem("MakeNewFile");
+		JMenuItem mntmMakenewfile = new JMenuItem("Set Output File");
 		mntmMakenewfile.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent e) {
@@ -60,8 +59,8 @@ public class UI extends UIV3 implements ActionListener {
 		ITEM_IMPORT_TEAM_NUMBERS.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				fullMatches = ui.makeFullArray();
-				ui.setMatchReset(matchCount);
+				fullMatches = makeFullArray();
+				setMatchReset(matchCount);
 				
 			}
 			
@@ -73,7 +72,7 @@ public class UI extends UIV3 implements ActionListener {
 				ArrayList<String> teamNums =fullMatches.get(matchCount);
 				List<RobotNumber> autoNums = new Vector<RobotNumber>();
 				List<RobotNumber> teleNums = new Vector<RobotNumber>();
-				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels) {
+				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : panels) {
 					autoNums.add(rp.autonomous.name);
 					teleNums.add(rp.teleoperated.name);
 				}
@@ -173,28 +172,6 @@ public class UI extends UIV3 implements ActionListener {
 	}
 	public void resetBoard(){
 		for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
-<<<<<<< HEAD
-=======
-			//Auto Clears
-			rp.autonomous.baselineField.setText("false");
-			rp.autonomous.gearField.setText("0");
-			rp.autonomous.gearAttempts.setText("0");
-			rp.autonomous.lowGoalField.setText("0");
-			rp.autonomous.lowGoalAttempts.setText("0");
-			rp.autonomous.highGoalField.setText("0");
-			rp.autonomous.highGoalAttempts.setText("0");
-			//Tele clears
-			rp.teleoperated.blocksField.setText("0");
-			rp.teleoperated.gearField.setText("0");
-			rp.teleoperated.gearAttempts.setText("0");
-			rp.teleoperated.lowGoalAttempts.setText("0");
-			rp.teleoperated.lowGoalField.setText("0");
-			rp.teleoperated.highGoalAttempts.setText("0");
-			rp.teleoperated.highGoalField.setText("0");
-			rp.teleoperated.climbingField.setText("false");
-			rp.teleoperated.climbingAttemptsField.setText("false");
->>>>>>> origin/master
-			
 			for (ScoreField f : rp.autonomous.fields) {
 				if (f.getText().equals("true") || f.getText().equals("false")) {
 					f.setText("false");
@@ -230,25 +207,12 @@ public class UI extends UIV3 implements ActionListener {
 		ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
 			for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
 				ArrayList<String> teamMatch = new ArrayList<String>();
-				teamMatch.add("" + matchCount);
-				teamMatch.add("" + rp.autonomous.name.getText());
-				teamMatch.add(rp.autonomous.baselineField.getText());
-				teamMatch.add(rp.autonomous.gearField.getText());
-				teamMatch.add(rp.autonomous.gearAttempts.getText());
-				teamMatch.add(rp.autonomous.lowGoalField.getText());
-				teamMatch.add(rp.autonomous.lowGoalAttempts.getText());
-				teamMatch.add(rp.autonomous.highGoalField.getText());
-				teamMatch.add(rp.autonomous.highGoalAttempts.getText());
-				teamMatch.add(rp.teleoperated.blocksField.getText());
-				teamMatch.add(rp.teleoperated.gearField.getText());
-				teamMatch.add(rp.teleoperated.gearAttempts.getText());
-				teamMatch.add(rp.teleoperated.lowGoalField.getText());
-				teamMatch.add(rp.teleoperated.lowGoalAttempts.getText());
-				teamMatch.add(rp.teleoperated.highGoalField.getText());
-				teamMatch.add(rp.teleoperated.highGoalAttempts.getText());
-				teamMatch.add(rp.teleoperated.climbingField.getText());
-				teamMatch.add(rp.teleoperated.climbingAttemptsField.getText());
-				teamMatch.add(rp.teleoperated.deadBotField.getText());
+				for (ScoreField field : rp.autonomous.fields) {
+					teamMatch.add(field.getText());
+				}
+				for (ScoreField field : rp.teleoperated.fields) {
+					teamMatch.add(field.getText());
+				}
 				out.add(teamMatch);
 			}
 		return out;

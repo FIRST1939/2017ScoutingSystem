@@ -120,10 +120,10 @@ public class Main {
 
 		// Adding the ControlScheme to every controller
 		for (GamepadController ct : gamepadControllers) {
-			ct.setActionListener(controls.autonomous);
+			ct.addActionListener(controls.autonomous);
 		}
 		for (StickController ct : stickControllers) {
-			ct.setActionListener(controls.autonomous);
+			ct.addActionListener(controls.autonomous);
 		}
 	}
 	

@@ -104,7 +104,8 @@ public class Controls extends ControlScheme {
 				// respective control schemes
 				if (controller.isStartPressed()) {
 					panel.setSelectedIndex(1);
-					controller.setActionListener(teleoperated);
+					controller.removeActionListener(autonomous);
+					controller.addActionListener(teleoperated);
 				}
 
 				if (controller.isBackPressed()) {
@@ -202,13 +203,11 @@ public class Controls extends ControlScheme {
 					value = !value;
 					panel.teleoperated.deadBotField.setText("" + value);
 				}
-<<<<<<< HEAD
 				if (controller.isYPressed()) {
 					boolean value = Boolean.parseBoolean(panel.teleoperated.climbingField.getText());
 					value = !value;
 					panel.teleoperated.climbingField.setText("" + value);
 				}
-=======
 				if (controller.isYPressed()){
 					if (controller.isLTHeld()){
 						boolean value = Boolean.parseBoolean(panel.teleoperated.climbingAttemptsField.getText());
@@ -221,10 +220,6 @@ public class Controls extends ControlScheme {
 						value1 = !value1;
 						panel.teleoperated.climbingField.setText("" +value1);
 					}
-					
-				
->>>>>>> origin/master
-				
 				if (controller.isBackPressed()) {
 					controller.rumble(0.5f);
 				}
@@ -233,7 +228,8 @@ public class Controls extends ControlScheme {
 				// respective control schemes
 				if (controller.isStartPressed()) {
 					panel.setSelectedIndex(0);
-					controller.setActionListener(autonomous);
+					controller.removeActionListener(teleoperated);
+					controller.addActionListener(autonomous);
 				}
 
 				// Suspends the thread for DELAY amount of miliseconds
