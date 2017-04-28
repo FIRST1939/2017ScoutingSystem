@@ -76,7 +76,9 @@ public class Main {
 			}
 			for (StickController ct : stickControllers) {
 				ct.pollControllerInput();
+				
 			}
+			
 		}
 		// *** END OF MAIN LOOP ***
 	}

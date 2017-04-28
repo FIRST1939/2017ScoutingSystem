@@ -104,6 +104,7 @@ public class TeleoperatedRobotPanel extends RobotPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		name = new RobotNumber(robotNumber);
+		name.setForeground(Color.WHITE);
 		name.setSize(this.getWidth(), 14);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
 		name.setFont(nameFont);

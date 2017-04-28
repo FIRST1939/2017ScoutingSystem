@@ -72,15 +72,9 @@ public class UI extends UIV3<RobotTabbedPanel<AutonomousRobotPanel, Teleoperated
 				ArrayList<String> teamNums =fullMatches.get(matchCount);
 				List<RobotNumber> autoNums = new Vector<RobotNumber>();
 				List<RobotNumber> teleNums = new Vector<RobotNumber>();
-				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : panels) {
-					autoNums.add(rp.autonomous.name);
-					teleNums.add(rp.teleoperated.name);
-				}
-				for (int i = 0; i < Math.min(teamNums.size(), autoNums.size()); i++) {
-					autoNums.get(i).setText(teamNums.get(i));
-					teleNums.get(i).setText(teamNums.get(i));
-				}
-				matchCount++;
+				
+				
+				if(matchCount != 0){
 				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
 					rp.autonomous.matchField.setText("" + matchCount);
 					rp.teleoperated.matchField.setText("" + matchCount);
@@ -93,7 +87,18 @@ public class UI extends UIV3<RobotTabbedPanel<AutonomousRobotPanel, Teleoperated
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				}
+				matchCount++;
+				for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : panels) {
+					autoNums.add(rp.autonomous.name);
+					teleNums.add(rp.teleoperated.name);
+				}
+				for (int i = 0; i < Math.min(teamNums.size(), autoNums.size()); i++) {
+					autoNums.get(i).setText(teamNums.get(i));
+					teleNums.get(i).setText(teamNums.get(i));
+				}
 				resetBoard();
+				
 				} 
 		});
 		
@@ -149,10 +154,10 @@ public class UI extends UIV3<RobotTabbedPanel<AutonomousRobotPanel, Teleoperated
 		// Initializing/Adding all the RobotTabbedPanels
 		for (int i = 1; i < 7; i++) {
 			if (i <= 3) {
-				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.RED), new TeleoperatedRobotPanel("Team " + i, Color.RED)));	
+				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.BLUE), new TeleoperatedRobotPanel("Team " + i, Color.BLUE)));	
 			}
 			else {
-				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.BLUE), new TeleoperatedRobotPanel("Team " + i, Color.BLUE)));
+				this.add(new Robot(new AutonomousRobotPanel("Team " + i, Color.RED), new TeleoperatedRobotPanel("Team " + i, Color.RED)));
 			}
 		}
 		
@@ -179,7 +184,7 @@ public class UI extends UIV3<RobotTabbedPanel<AutonomousRobotPanel, Teleoperated
 					f.setText("0");
 				}
 			}
-			
+			rp.autonomous.matchField.setText("" + matchCount);			
 			for (ScoreField f : rp.teleoperated.fields) {
 				if (f.getText().equals("true") || f.getText().equals("false")) {
 					f.setText("false");
@@ -187,6 +192,7 @@ public class UI extends UIV3<RobotTabbedPanel<AutonomousRobotPanel, Teleoperated
 					f.setText("0");
 				}
 			}
+			rp.teleoperated.matchField.setText("" + matchCount);
 		}
 	}
 	public File getSave(){
@@ -207,12 +213,25 @@ public class UI extends UIV3<RobotTabbedPanel<AutonomousRobotPanel, Teleoperated
 		ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
 			for (RobotTabbedPanel<AutonomousRobotPanel, TeleoperatedRobotPanel> rp : UI.this.panels){
 				ArrayList<String> teamMatch = new ArrayList<String>();
-				for (ScoreField field : rp.autonomous.fields) {
-					teamMatch.add(field.getText());
-				}
-				for (ScoreField field : rp.teleoperated.fields) {
-					teamMatch.add(field.getText());
-				}
+				teamMatch.add("" + matchCount);
+				teamMatch.add(rp.autonomous.name.getText());
+				teamMatch.add(rp.autonomous.baselineField.getText());
+				teamMatch.add(rp.autonomous.gearField.getText());
+				teamMatch.add(rp.autonomous.gearAttempts.getText());
+				teamMatch.add(rp.autonomous.lowGoalField.getText());
+				teamMatch.add(rp.autonomous.lowGoalAttempts.getText());
+				teamMatch.add(rp.autonomous.highGoalField.getText());
+				teamMatch.add(rp.autonomous.highGoalAttempts.getText());
+				teamMatch.add(rp.teleoperated.blocksField.getText());
+				teamMatch.add(rp.teleoperated.gearField.getText());
+				teamMatch.add(rp.teleoperated.gearAttempts.getText());
+				teamMatch.add(rp.teleoperated.lowGoalField.getText());
+				teamMatch.add(rp.teleoperated.lowGoalAttempts.getText());
+				teamMatch.add(rp.teleoperated.highGoalField.getText());
+				teamMatch.add(rp.teleoperated.highGoalAttempts.getText());
+				teamMatch.add(rp.teleoperated.climbingField.getText());
+				teamMatch.add(rp.teleoperated.climbingAttemptsField.getText());
+				teamMatch.add(rp.teleoperated.deadBotField.getText());
 				out.add(teamMatch);
 			}
 		return out;

@@ -95,6 +95,7 @@ public class AutonomousRobotPanel extends RobotPanel {
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
 		name = new RobotNumber(robotNumber);
+		name.setForeground(Color.WHITE);
 		name.setSize(this.getWidth(), 14);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
 		name.setFont(nameFont);
