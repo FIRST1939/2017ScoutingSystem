@@ -229,7 +229,7 @@ public class Controls extends ControlScheme {
 					controller.addActionListener(autonomous);
 				}
 
-				// Suspends the thread for DELAY amount of miliseconds
+				// Suspends the thread for DELAY amount of milliseconds
 				try {
 					Thread.sleep(DELAY);
 				} catch (InterruptedException e1) {
