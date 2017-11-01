@@ -1,0 +1,2 @@
+Robot Number,Low Goal,High Goal,Gears,Baseline,0,0,0,0,0,0,false,0,0,0,0,0,0,false,0,0,0,0,0,0,false,0,0,0,0,0,0,false,0,0,0,0,0,0,false,0,0,0,0,0,0,false
+Robot Number,Low Goal,High Goal,Gears,Blocks,Climbing,Dead Bot,0,0,0,0,0,0,0,false,false,false,0,0,0,0,0,0,0,false,false,false,0,0,0,0,0,0,0,false,false,false,0,0,0,0,0,0,0,false,false,false,0,0,0,0,0,0,0,false,false,false,0,0,0,0,0,0,0,false,false,false

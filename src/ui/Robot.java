@@ -1,10 +1,8 @@
-package elements;
+package ui;
 
-import buildingBlocks.RobotNumber;
-import buildingBlocks.RobotTabbedPanel;
-import buildingBlocks.ScoreField;
-import ui.AutonomousRobotPanel;
-import ui.TeleoperatedRobotPanel;
+import com.frcteam1939.ui.RobotNumber;
+import com.frcteam1939.ui.RobotTabbedPanel;
+import com.frcteam1939.ui.ScoreField;
 
 /**
  * This class manages a panel that governs the Autonomous and Teleoperated panels.
@@ -15,16 +13,11 @@ public class Robot extends RobotTabbedPanel<AutonomousRobotPanel,TeleoperatedRob
 	
 	private static final long serialVersionUID = 4952300412598887831L;
 	
-	private RobotNumber number = new RobotNumber("" + null);
+	private RobotNumber number = new RobotNumber(-1);
 	
 	public Robot(AutonomousRobotPanel autonomous, TeleoperatedRobotPanel teleoperated) {
 		super(autonomous, teleoperated);
-		number.setText(autonomous.number.getText());
-	}
-	
-	@Override
-	public String getTeamNumber() {
-		return number.getText();
+		number.set(autonomous.number.get());
 	}
 	
 	public void setEditable(boolean arg0) {
